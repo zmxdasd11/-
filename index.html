@@ -42,21 +42,21 @@
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
-            margin-bottom: 12px;
+            margin-bottom: 8px;
             text-shadow: 0 2px 8px rgba(0,0,0,0.5);
         }
         .subtitle {
             text-align: center;
             color: #b9a98a;
-            margin-bottom: 20px;
-            font-size: 0.85rem;
+            margin-bottom: 16px;
+            font-size: 0.8rem;
             letter-spacing: 2px;
             font-weight: 400;
         }
         .mode-tabs {
             display: flex;
-            gap: 8px;
-            margin-bottom: 20px;
+            gap: 6px;
+            margin-bottom: 16px;
             background: #1f1a2c;
             padding: 4px;
             border-radius: 50px;
@@ -66,14 +66,14 @@
             flex: 1;
             background: transparent;
             border: none;
-            padding: 10px 6px;
+            padding: 10px 4px;
             border-radius: 40px;
             font-weight: 600;
-            font-size: 0.85rem;
+            font-size: 0.75rem;
             color: #c0b2a0;
             cursor: pointer;
             transition: all 0.25s;
-            letter-spacing: 0.5px;
+            letter-spacing: 0.3px;
             box-shadow: none;
             white-space: nowrap;
         }
@@ -86,8 +86,8 @@
         .field-group {
             background: rgba(0,0,0,0.35);
             border-radius: 20px;
-            padding: 16px 14px;
-            margin-bottom: 16px;
+            padding: 14px 14px;
+            margin-bottom: 14px;
             border: 1px solid #4e3d54;
             box-shadow: inset 0 2px 8px rgba(0,0,0,0.4);
         }
@@ -96,7 +96,7 @@
             font-weight: 500;
             color: #e0cfb0;
             margin-bottom: 8px;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             letter-spacing: 0.4px;
         }
         input[type="number"] {
@@ -105,7 +105,7 @@
             border: 2px solid #5b4b3f;
             border-radius: 25px;
             padding: 12px 16px;
-            font-size: 1.3rem;
+            font-size: 1.2rem;
             font-weight: 600;
             color: #ffe6b0;
             outline: none;
@@ -125,24 +125,50 @@
             background: #231d2e;
             box-shadow: 0 0 20px rgba(220,170,90,0.25);
         }
+
+        /* ===== 手机优化：附魔选项改为滚动式 ===== */
+        .enchant-scroll-wrapper {
+            overflow-x: auto;
+            overflow-y: hidden;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: thin;
+            padding-bottom: 6px;
+            margin: 0 -4px;
+        }
+        .enchant-scroll-wrapper::-webkit-scrollbar {
+            height: 4px;
+            background: #2f2535;
+            border-radius: 4px;
+        }
+        .enchant-scroll-wrapper::-webkit-scrollbar-thumb {
+            background: #b6956a;
+            border-radius: 4px;
+        }
+
         .enchant-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
+            display: flex;
+            flex-wrap: nowrap;
             gap: 8px;
-            margin-top: 4px;
+            min-width: max-content;
+            padding: 0 4px;
         }
         .enchant-option {
             display: flex;
+            flex-direction: column;
             align-items: center;
+            justify-content: center;
             background: rgba(38, 30, 48, 0.9);
-            padding: 8px 10px;
+            padding: 10px 12px;
             border-radius: 16px;
             border: 1px solid #544363;
             transition: all 0.15s;
             cursor: pointer;
             user-select: none;
             position: relative;
-            min-height: 44px;
+            min-width: 70px;
+            min-height: 70px;
+            flex-shrink: 0;
+            text-align: center;
         }
         .enchant-option:hover {
             border-color: #b6956a;
@@ -160,15 +186,14 @@
             z-index: 10;
         }
         .custom-check {
-            width: 20px;
-            height: 20px;
+            width: 22px;
+            height: 22px;
             border-radius: 6px;
             border: 2px solid #a58e6f;
             background: #241f2b;
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            margin-right: 8px;
             flex-shrink: 0;
             transition: 0.15s;
             font-size: 14px;
@@ -176,6 +201,7 @@
             font-weight: bold;
             pointer-events: none;
             z-index: 1;
+            margin-bottom: 4px;
         }
         .enchant-option input:checked~.custom-check {
             background: #ac8f5f;
@@ -193,44 +219,43 @@
         .enchant-name {
             font-weight: 600;
             color: #f0dfbf;
-            font-size: 0.75rem;
+            font-size: 0.7rem;
             letter-spacing: 0.3px;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
             pointer-events: none;
             z-index: 1;
-            flex: 1;
+            line-height: 1.2;
         }
         .enchant-mult {
-            font-size: 0.65rem;
+            font-size: 0.6rem;
             color: #b9a57a;
             background: #2f2535;
-            padding: 3px 6px;
+            padding: 2px 8px;
             border-radius: 12px;
             border: 1px solid #66553e;
             pointer-events: none;
             z-index: 1;
-            white-space: nowrap;
+            margin-top: 3px;
         }
+
+        /* ===== 结果区域 ===== */
         .result-area {
             background: #0d0b12;
             border-radius: 24px;
             padding: 16px;
-            margin: 16px 0 12px;
+            margin: 14px 0 12px;
             border: 2px solid #ba9b6b;
             box-shadow: 0 0 30px rgba(200, 160, 80, 0.2);
             text-align: center;
         }
         .result-label {
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             color: #b9a384;
             letter-spacing: 1.5px;
             text-transform: uppercase;
             margin-bottom: 4px;
         }
         .result-value {
-            font-size: 2.5rem;
+            font-size: 2.4rem;
             font-weight: 800;
             color: #ffdf9e;
             text-shadow: 0 0 25px #b68b4c;
@@ -244,22 +269,24 @@
         }
         .result-hint {
             color: #92836a;
-            font-size: 0.7rem;
+            font-size: 0.65rem;
             word-break: break-word;
             line-height: 1.3;
         }
+
+        /* ===== 按钮 ===== */
         .btn-group {
             display: flex;
             gap: 10px;
             flex-wrap: wrap;
-            margin-top: 12px;
+            margin-top: 10px;
         }
         .btn {
             flex: 1;
             min-width: 100px;
             background: #3f3344;
             border: none;
-            padding: 12px 10px;
+            padding: 14px 10px;
             border-radius: 50px;
             font-weight: 700;
             font-size: 0.9rem;
@@ -290,56 +317,49 @@
         }
         footer {
             text-align: center;
-            margin-top: 16px;
+            margin-top: 14px;
             color: #6d604c;
-            font-size: 0.6rem;
+            font-size: 0.55rem;
             letter-spacing: 0.5px;
             line-height: 1.4;
         }
 
-        /* 平板和桌面端优化 */
-        @media (min-width: 768px) {
-            body {
-                padding: 20px;
-                align-items: center;
-            }
+        /* ===== 平板和桌面 ===== */
+        @media (min-width: 600px) {
             .calculator {
                 border-radius: 48px;
                 padding: 28px 24px;
-                margin: 0 auto;
             }
             h1 {
                 font-size: 2.2rem;
-                margin-bottom: 18px;
             }
             .subtitle {
                 font-size: 0.95rem;
-                margin-bottom: 28px;
+                margin-bottom: 24px;
             }
             .mode-tabs {
                 gap: 12px;
                 padding: 6px;
-                margin-bottom: 30px;
+                margin-bottom: 24px;
             }
             .mode-btn {
-                padding: 12px 6px;
                 font-size: 1rem;
+                padding: 12px 6px;
             }
             .field-group {
-                padding: 22px 20px;
-                margin-bottom: 26px;
-                border-radius: 28px;
-            }
-            .enchant-grid {
-                grid-template-columns: repeat(3, 1fr);
-                gap: 12px 10px;
+                padding: 20px 20px;
+                margin-bottom: 20px;
             }
             .enchant-option {
-                padding: 10px 12px;
-                border-radius: 20px;
+                min-width: 80px;
+                min-height: 80px;
+                padding: 12px 16px;
             }
             .enchant-name {
-                font-size: 0.85rem;
+                font-size: 0.8rem;
+            }
+            .enchant-mult {
+                font-size: 0.7rem;
             }
             .result-value {
                 font-size: 3.5rem;
@@ -356,35 +376,43 @@
             }
         }
 
-        /* 小屏幕手机优化 */
-        @media (max-width: 360px) {
+        /* ===== 小屏手机 ===== */
+        @media (max-width: 400px) {
             .calculator {
-                padding: 16px 12px;
-                border-radius: 20px;
+                padding: 14px 10px;
+                border-radius: 18px;
             }
             h1 {
-                font-size: 1.5rem;
+                font-size: 1.4rem;
             }
             .mode-btn {
-                font-size: 0.75rem;
-                padding: 8px 4px;
-            }
-            .enchant-grid {
-                gap: 6px;
+                font-size: 0.65rem;
+                padding: 8px 2px;
             }
             .enchant-option {
-                padding: 6px 8px;
-                min-height: 40px;
+                min-width: 60px;
+                min-height: 60px;
+                padding: 8px 10px;
             }
             .enchant-name {
-                font-size: 0.7rem;
+                font-size: 0.6rem;
             }
             .enchant-mult {
-                font-size: 0.6rem;
-                padding: 2px 4px;
+                font-size: 0.5rem;
+                padding: 1px 6px;
+            }
+            .custom-check {
+                width: 18px;
+                height: 18px;
+                font-size: 12px;
             }
             .result-value {
                 font-size: 2rem;
+            }
+            .btn {
+                font-size: 0.8rem;
+                padding: 12px 8px;
+                min-width: 80px;
             }
         }
     </style>
@@ -406,11 +434,13 @@
             <input type="number" id="luckInput" value="100" step="any" min="0" placeholder="输入数值" inputmode="decimal">
         </div>
 
-        <!-- 附魔选项区域 -->
+        <!-- 附魔选项区域：改为横向滚动 -->
         <div class="field-group">
-            <label style="margin-bottom: 10px;">🔮 附魔选项 (勾选生效)</label>
-            <div class="enchant-grid" id="enchantGrid">
-                <!-- 动态由JS生成 -->
+            <label style="margin-bottom: 10px;">🔮 附魔选项 (勾选生效)  ← 左右滑动</label>
+            <div class="enchant-scroll-wrapper">
+                <div class="enchant-grid" id="enchantGrid">
+                    <!-- 动态由JS生成 -->
+                </div>
             </div>
         </div>
 
@@ -431,7 +461,6 @@
 
     <script>
         (function() {
-            // 附魔定义：顺序固定，倍率固定
             const enchantments = [
                 { name: "Poison",    mult: 1.5 },
                 { name: "Frost",     mult: 1.4 },
@@ -445,7 +474,6 @@
                 { name: "ADMIN",     mult: 2.0 }
             ];
 
-            // DOM 元素
             const modeForwardBtn = document.getElementById('modeForward');
             const modeReverseBtn = document.getElementById('modeReverse');
             const inputLabel = document.getElementById('inputLabel');
@@ -457,10 +485,8 @@
             const resetBtn = document.getElementById('resetBtn');
             const enchantGrid = document.getElementById('enchantGrid');
 
-            // 状态
             let isForwardMode = true;
 
-            // 生成附魔复选框
             function renderEnchantOptions() {
                 enchantGrid.innerHTML = '';
                 enchantments.forEach((ench, index) => {
@@ -490,12 +516,10 @@
                     optionDiv.appendChild(nameSpan);
                     optionDiv.appendChild(multSpan);
 
-                    // 监听checkbox变化
                     checkbox.addEventListener('change', function() {
                         computeAndDisplay();
                     });
 
-                    // 整个div点击切换
                     optionDiv.addEventListener('click', function(e) {
                         if (e.target !== checkbox) {
                             checkbox.checked = !checkbox.checked;
@@ -507,7 +531,6 @@
                 });
             }
 
-            // 获取所有勾选的附魔倍率
             function getSelectedMultipliers() {
                 const checkboxes = enchantGrid.querySelectorAll('input[type="checkbox"]');
                 const selectedMults = [];
@@ -519,14 +542,12 @@
                 return selectedMults;
             }
 
-            // 计算综合倍率
             function getTotalMultiplier() {
                 const mults = getSelectedMultipliers();
                 if (mults.length === 0) return 1.0;
                 return mults.reduce((acc, val) => acc * val, 1.0);
             }
 
-            // 更新结果
             function updateResult(value, hintText) {
                 let displayValue;
                 if (value === null || value === undefined || isNaN(value)) {
@@ -541,7 +562,6 @@
                 resultHint.textContent = hintText || '';
             }
 
-            // 计算并显示
             function computeAndDisplay() {
                 const inputVal = parseFloat(luckInput.value);
                 if (isNaN(inputVal) || inputVal < 0) {
@@ -578,7 +598,6 @@
                 }
             }
 
-            // 切换模式
             function setMode(forward) {
                 isForwardMode = forward;
                 if (forward) {
@@ -595,7 +614,6 @@
                 computeAndDisplay();
             }
 
-            // 重置
             function resetAll() {
                 const checkboxes = enchantGrid.querySelectorAll('input[type="checkbox"]');
                 checkboxes.forEach(cb => cb.checked = false);
@@ -603,7 +621,6 @@
                 computeAndDisplay();
             }
 
-            // 初始化
             function init() {
                 renderEnchantOptions();
 
@@ -634,7 +651,6 @@
                     }, 200);
                 });
 
-                // 初始计算
                 computeAndDisplay();
             }
 
