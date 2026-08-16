@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>✨ 裸矿运气计算器 · 附魔倍率反推</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            background: linear-gradient(145deg, #1e1a2b 0%, #2a2338 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+            padding: 20px;
+            margin: 0;
+        }
+        .calculator {
+            max-width: 700px;
+            width: 100%;
+            background: rgba(28, 24, 40, 0.9);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-radius: 48px;
+            padding: 28px 24px;
+            box-shadow: 0 25px 50px -8px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,215,150,0.25);
+            transition: all 0.2s ease;
+        }
+        h1 {
+            font-size: 2.2rem;
+            font-weight: 600;
+            text-align: center;
+            letter-spacing: -0.5px;
+            background: linear-gradient(135deg, #f5e7c8, #d9c7a2);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 18px;
+            text-shadow: 0 2px 8px rgba(0,0,0,0.5);
+        }
+        .subtitle {
+            text-align: center;
+            color: #b9a98a;
+            margin-bottom: 28px;
+            font-size: 0.95rem;
+            letter-spacing: 2px;
+            font-weight: 400;
+        }
+        .mode-tabs {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 30px;
+            background: #1f1a2c;
+            padding: 6px;
+            border-radius: 999px;
+            border: 1px solid #4d3e5e;
+        }
+        .mode-btn {
+            flex: 1;
+            background: transparent;
+            border: none;
+            padding: 12px 6px;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 1rem;
+            color: #c0b2a0;
+            cursor: pointer;
+            transition: all 0.25s;
+            letter-spacing: 0.5px;
+            box-shadow: none;
+        }
+        .mode-btn.active {
+            background: #5e4a3c;
+            color: #ffedcf;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.6), inset 0 1px 2px rgba(255,220,160,0.3);
+            border: 1px solid #c9a87c;
+        }
+        .field-group {
+            background: rgba(0,0,0,0.35);
+            border-radius: 28px;
+            padding: 22px 20px;
+            margin-bottom: 26px;
+            border: 1px solid #4e3d54;
+            box-shadow: inset 0 2px 8px rgba(0,0,0,0.4);
+        }
+        label {
+            display: block;
+            font-weight: 500;
+            color: #e0cfb0;
+            margin-bottom: 10px;
+            font-size: 1rem;
+            letter-spacing: 0.4px;
+        }
+        input[type="number"] {
+            width: 100%;
+            background: #1c1725;
+            border: 2px solid #5b4b3f;
+            border-radius: 30px;
+            padding: 16px 22px;
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #ffe6b0;
+            outline: none;
+            transition: 0.2s;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+            text-align: center;
+        }
+        input[type="number"]:focus {
+            border-color: #dbb47a;
+            background: #231d2e;
+            box-shadow: 0 0 20px rgba(220,170,90,0.25);
+        }
+        .enchant-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px 10px;
+            margin-top: 6px;
+        }
+        .enchant-option {
+            display: flex;
+            align-items: center;
+            background: rgba(38, 30, 48, 0.9);
+            padding: 10px 12px;
+            border-radius: 20px;
+            border: 1px solid #544363;
+            transition: all 0.15s;
+            cursor: pointer;
+            user-select: none;
+            position: relative;
+        }
+        .enchant-option:hover {
+            border-color: #b6956a;
+            background: #2d2440;
+        }
+        .enchant-option input[type="checkbox"] {
+            position: absolute;
+            opacity: 0;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            cursor: pointer;
+            margin: 0;
+            z-index: 10;
+        }
+        .custom-check {
+            width: 22px;
+            height: 22px;
+            border-radius: 8px;
+            border: 2px solid #a58e6f;
+            background: #241f2b;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 10px;
+            flex-shrink: 0;
+            transition: 0.15s;
+            font-size: 16px;
+            color: white;
+            font-weight: bold;
+            pointer-events: none;
+            z-index: 1;
+        }
+        .enchant-option input:checked~.custom-check {
+            background: #ac8f5f;
+            border-color: #f3d49b;
+            box-shadow: 0 0 12px #dbb47a;
+        }
+        .enchant-option input:checked~.custom-check::after {
+            content: "✓";
+            display: block;
+            color: #1a140e;
+            font-weight: 900;
+            font-size: 18px;
+            line-height: 1;
+        }
+        .enchant-name {
+            font-weight: 600;
+            color: #f0dfbf;
+            font-size: 0.85rem;
+            letter-spacing: 0.3px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            pointer-events: none;
+            z-index: 1;
+        }
+        .enchant-mult {
+            margin-left: auto;
+            font-size: 0.75rem;
+            color: #b9a57a;
+            background: #2f2535;
+            padding: 4px 8px;
+            border-radius: 20px;
+            border: 1px solid #66553e;
+            pointer-events: none;
+            z-index: 1;
+        }
+        .result-area {
+            background: #0d0b12;
+            border-radius: 36px;
+            padding: 22px;
+            margin: 20px 0 10px;
+            border: 2px solid #ba9b6b;
+            box-shadow: 0 0 30px rgba(200, 160, 80, 0.2);
+            text-align: center;
+        }
+        .result-label {
+            font-size: 1rem;
+            color: #b9a384;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+        .result-value {
+            font-size: 3.5rem;
+            font-weight: 800;
+            color: #ffdf9e;
+            text-shadow: 0 0 25px #b68b4c;
+            line-height: 1.2;
+            word-break: break-word;
+            margin: 8px 0 4px;
+            background: linear-gradient(180deg, #ffe9c0, #e2bc7a);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        .result-hint {
+            color: #92836a;
+            font-size: 0.8rem;
+        }
+        .btn-group {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-top: 15px;
+        }
+        .btn {
+            flex: 1;
+            min-width: 120px;
+            background: #3f3344;
+            border: none;
+            padding: 16px 10px;
+            border-radius: 60px;
+            font-weight: 700;
+            font-size: 1rem;
+            color: #ecd9b0;
+            cursor: pointer;
+            transition: all 0.25s;
+            border: 1px solid #6c5b49;
+            letter-spacing: 1px;
+            box-shadow: 0 5px 14px rgba(0,0,0,0.5);
+        }
+        .btn:hover {
+            background: #5c4a3a;
+            color: #fff3da;
+            border-color: #c7a36b;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.6);
+        }
+        .btn:active {
+            transform: translateY(1px);
+            box-shadow: 0 3px 8px rgba(0,0,0,0.5);
+        }
+        .btn.reset {
+            background: #2e2636;
+            border-color: #514457;
+            color: #c9b8a0;
+        }
+        footer {
+            text-align: center;
+            margin-top: 20px;
+            color: #6d604c;
+            font-size: 0.7rem;
+            letter-spacing: 1px;
+        }
+        @media (max-width: 500px) {
+            .enchant-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .result-value {
+                font-size: 2.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="calculator">
+        <h1>⛏️ 裸矿运气</h1>
+        <div class="subtitle">附魔倍率 · 正推反推</div>
+
+        <!-- 模式切换 -->
+        <div class="mode-tabs">
+            <button class="mode-btn active" id="modeForward">正推 ➜ 原始→附魔</button>
+            <button class="mode-btn" id="modeReverse">反推 ➜ 附魔→原始</button>
+        </div>
+
+        <!-- 主体输入区 -->
+        <div class="field-group" id="inputSection">
+            <label id="inputLabel">当前矿物幸运值 (原始基础幸运)</label>
+            <input type="number" id="luckInput" value="100" step="any" min="0" placeholder="输入数值">
+        </div>
+
+        <!-- 附魔选项区域 -->
+        <div class="field-group">
+            <label style="margin-bottom: 14px;">🔮 附魔选项 (勾选生效)</label>
+            <div class="enchant-grid" id="enchantGrid">
+                <!-- 动态由JS生成 -->
+            </div>
+        </div>
+
+        <!-- 结果显示区 -->
+        <div class="result-area">
+            <div class="result-label" id="resultLabel">附魔后幸运值</div>
+            <div class="result-value" id="resultValue">100.00</div>
+            <div class="result-hint" id="resultHint">未选择任何附魔</div>
+        </div>
+
+        <!-- 操作按钮 -->
+        <div class="btn-group">
+            <button class="btn" id="calcBtn">⚡ 计算</button>
+            <button class="btn reset" id="resetBtn">🔄 重置</button>
+        </div>
+        <footer>Poison→Frost→Thunder→Dustworn→Molten→Bloodmoon→Aurora→Lucky→Starfall→ADMIN</footer>
+    </div>
+
+    <script>
+        (function() {
+            // 附魔定义：顺序固定，倍率固定
+            const enchantments = [
+                { name: "Poison",    mult: 1.5 },
+                { name: "Frost",     mult: 1.4 },
+                { name: "Thunder",   mult: 1.5 },
+                { name: "Dustworn",  mult: 1.4 },
+                { name: "Molten",    mult: 1.4 },
+                { name: "Bloodmoon", mult: 1.75 },
+                { name: "Aurora",    mult: 2.2 },
+                { name: "Lucky",     mult: 1.7 },
+                { name: "Starfall",  mult: 1.3 },
+                { name: "ADMIN",     mult: 2.0 }
+            ];
+
+            // DOM 元素
+            const modeForwardBtn = document.getElementById('modeForward');
+            const modeReverseBtn = document.getElementById('modeReverse');
+            const inputLabel = document.getElementById('inputLabel');
+            const luckInput = document.getElementById('luckInput');
+            const resultLabel = document.getElementById('resultLabel');
+            const resultValue = document.getElementById('resultValue');
+            const resultHint = document.getElementById('resultHint');
+            const calcBtn = document.getElementById('calcBtn');
+            const resetBtn = document.getElementById('resetBtn');
+            const enchantGrid = document.getElementById('enchantGrid');
+
+            // 状态
+            let isForwardMode = true;
+
+            // 生成附魔复选框 - 使用更稳定的方式
+            function renderEnchantOptions() {
+                enchantGrid.innerHTML = '';
+                enchantments.forEach((ench, index) => {
+                    const optionDiv = document.createElement('div');
+                    optionDiv.className = 'enchant-option';
+                    optionDiv.setAttribute('data-index', index);
+
+                    const checkbox = document.createElement('input');
+                    checkbox.type = 'checkbox';
+                    checkbox.id = `ench_${index}`;
+                    checkbox.checked = false;
+
+                    const customCheckSpan = document.createElement('span');
+                    customCheckSpan.className = 'custom-check';
+
+                    const nameSpan = document.createElement('span');
+                    nameSpan.className = 'enchant-name';
+                    nameSpan.textContent = ench.name;
+
+                    const multSpan = document.createElement('span');
+                    multSpan.className = 'enchant-mult';
+                    multSpan.textContent = '×' + ench.mult.toFixed(2);
+
+                    optionDiv.appendChild(checkbox);
+                    optionDiv.appendChild(customCheckSpan);
+                    optionDiv.appendChild(nameSpan);
+                    optionDiv.appendChild(multSpan);
+
+                    // 直接监听checkbox的change事件，不依赖label点击
+                    checkbox.addEventListener('change', function() {
+                        computeAndDisplay();
+                    });
+
+                    // 整个div也可以点击切换（除了checkbox本身）
+                    optionDiv.addEventListener('click', function(e) {
+                        // 如果点击的不是checkbox本身，则切换checkbox状态
+                        if (e.target !== checkbox) {
+                            checkbox.checked = !checkbox.checked;
+                            // 触发change事件以更新计算
+                            checkbox.dispatchEvent(new Event('change'));
+                        }
+                    });
+
+                    enchantGrid.appendChild(optionDiv);
+                });
+            }
+
+            // 获取所有勾选的附魔倍率数组
+            function getSelectedMultipliers() {
+                const checkboxes = enchantGrid.querySelectorAll('input[type="checkbox"]');
+                const selectedMults = [];
+                checkboxes.forEach((cb, idx) => {
+                    if (cb.checked && enchantments[idx]) {
+                        selectedMults.push(enchantments[idx].mult);
+                    }
+                });
+                return selectedMults;
+            }
+
+            // 计算综合倍率
+            function getTotalMultiplier() {
+                const mults = getSelectedMultipliers();
+                if (mults.length === 0) return 1.0;
+                return mults.reduce((acc, val) => acc * val, 1.0);
+            }
+
+            // 更新结果区域
+            function updateResult(value, hintText) {
+                let displayValue;
+                if (value === null || value === undefined || isNaN(value)) {
+                    displayValue = '—';
+                } else {
+                    displayValue = Number(value.toFixed(6)).toString();
+                    if (displayValue.length > 12) {
+                        displayValue = Number(value).toPrecision(8);
+                    }
+                }
+                resultValue.textContent = displayValue;
+                resultHint.textContent = hintText || '';
+            }
+
+            // 计算并显示结果
+            function computeAndDisplay() {
+                const inputVal = parseFloat(luckInput.value);
+                if (isNaN(inputVal) || inputVal < 0) {
+                    resultValue.textContent = '无效输入';
+                    resultHint.textContent = '请输入非负数值';
+                    return;
+                }
+
+                const selectedMults = getSelectedMultipliers();
+                const totalMult = getTotalMultiplier();
+
+                if (isForwardMode) {
+                    resultLabel.textContent = '附魔后幸运值';
+                    if (selectedMults.length === 0) {
+                        updateResult(inputVal, '未勾选附魔，结果等于原始值');
+                    } else {
+                        const finalLuck = inputVal * totalMult;
+                        const multNames = enchantments
+                            .filter((e, i) => document.getElementById(`ench_${i}`).checked)
+                            .map(e => e.name).join(' × ');
+                        updateResult(finalLuck, `倍率累计 ×${totalMult.toFixed(4)} (${multNames})`);
+                    }
+                } else {
+                    resultLabel.textContent = '原始矿物幸运值';
+                    if (selectedMults.length === 0) {
+                        updateResult(inputVal, '未勾选附魔，原始值等于输入值');
+                    } else {
+                        const originalLuck = inputVal / totalMult;
+                        const multNames = enchantments
+                            .filter((e, i) => document.getElementById(`ench_${i}`).checked)
+                            .map(e => e.name).join(' × ');
+                        updateResult(originalLuck, `除以倍率 ×${totalMult.toFixed(4)} 还原原始 (${multNames})`);
+                    }
+                }
+            }
+
+            // 切换模式
+            function setMode(forward) {
+                isForwardMode = forward;
+                if (forward) {
+                    modeForwardBtn.classList.add('active');
+                    modeReverseBtn.classList.remove('active');
+                    inputLabel.textContent = '当前矿物幸运值 (原始基础幸运)';
+                    luckInput.placeholder = '输入原始幸运值';
+                } else {
+                    modeReverseBtn.classList.add('active');
+                    modeForwardBtn.classList.remove('active');
+                    inputLabel.textContent = '当前矿物幸运值 (附魔后幸运)';
+                    luckInput.placeholder = '输入附魔后幸运值';
+                }
+                computeAndDisplay();
+            }
+
+            // 重置所有
+            function resetAll() {
+                const checkboxes = enchantGrid.querySelectorAll('input[type="checkbox"]');
+                checkboxes.forEach(cb => cb.checked = false);
+                luckInput.value = 100;
+                computeAndDisplay();
+            }
+
+            // 初始化
+            function init() {
+                renderEnchantOptions();
+
+                modeForwardBtn.addEventListener('click', () => setMode(true));
+                modeReverseBtn.addEventListener('click', () => setMode(false));
+
+                calcBtn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    computeAndDisplay();
+                });
+
+                resetBtn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    resetAll();
+                });
+
+                luckInput.addEventListener('keypress', (e) => {
+                    if (e.key === 'Enter') {
+                        e.preventDefault();
+                        computeAndDisplay();
+                    }
+                });
+
+                luckInput.addEventListener('input', () => {
+                    clearTimeout(window._luckInputTimer);
+                    window._luckInputTimer = setTimeout(() => {
+                        computeAndDisplay();
+                    }, 200);
+                });
+
+                // 初始计算
+                computeAndDisplay();
+            }
+
+            init();
+        })();
+    </script>
+</body>
+</html>
