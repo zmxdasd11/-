@@ -125,8 +125,35 @@
             background: #231d2e;
             box-shadow: 0 0 20px rgba(220,170,90,0.25);
         }
-
-        /* ===== 手机优化：附魔选项改为滚动式 ===== */
+        select {
+            width: 100%;
+            background: #1c1725;
+            border: 2px solid #5b4b3f;
+            border-radius: 25px;
+            padding: 12px 16px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #ffe6b0;
+            outline: none;
+            transition: 0.2s;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+            text-align: center;
+            appearance: none;
+            -webkit-appearance: none;
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23b9a57a' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 16px center;
+            background-size: 20px;
+        }
+        select:focus {
+            border-color: #dbb47a;
+            background-color: #231d2e;
+            box-shadow: 0 0 20px rgba(220,170,90,0.25);
+        }
+        select option {
+            background: #1c1725;
+            color: #ffe6b0;
+        }
         .enchant-scroll-wrapper {
             overflow-x: auto;
             overflow-y: hidden;
@@ -144,7 +171,6 @@
             background: #b6956a;
             border-radius: 4px;
         }
-
         .enchant-grid {
             display: flex;
             flex-wrap: nowrap;
@@ -236,8 +262,6 @@
             z-index: 1;
             margin-top: 3px;
         }
-
-        /* ===== 结果区域 ===== */
         .result-area {
             background: #0d0b12;
             border-radius: 24px;
@@ -273,8 +297,6 @@
             word-break: break-word;
             line-height: 1.3;
         }
-
-        /* ===== 按钮 ===== */
         .btn-group {
             display: flex;
             gap: 10px;
@@ -323,97 +345,34 @@
             letter-spacing: 0.5px;
             line-height: 1.4;
         }
-
-        /* ===== 平板和桌面 ===== */
         @media (min-width: 600px) {
             .calculator {
                 border-radius: 48px;
                 padding: 28px 24px;
             }
-            h1 {
-                font-size: 2.2rem;
-            }
-            .subtitle {
-                font-size: 0.95rem;
-                margin-bottom: 24px;
-            }
-            .mode-tabs {
-                gap: 12px;
-                padding: 6px;
-                margin-bottom: 24px;
-            }
-            .mode-btn {
-                font-size: 1rem;
-                padding: 12px 6px;
-            }
-            .field-group {
-                padding: 20px 20px;
-                margin-bottom: 20px;
-            }
-            .enchant-option {
-                min-width: 80px;
-                min-height: 80px;
-                padding: 12px 16px;
-            }
-            .enchant-name {
-                font-size: 0.8rem;
-            }
-            .enchant-mult {
-                font-size: 0.7rem;
-            }
-            .result-value {
-                font-size: 3.5rem;
-            }
-            .result-hint {
-                font-size: 0.8rem;
-            }
-            .btn {
-                padding: 16px 10px;
-                font-size: 1rem;
-            }
-            footer {
-                font-size: 0.7rem;
-            }
+            h1 { font-size: 2.2rem; }
+            .subtitle { font-size: 0.95rem; margin-bottom: 24px; }
+            .mode-tabs { gap: 12px; padding: 6px; margin-bottom: 24px; }
+            .mode-btn { font-size: 1rem; padding: 12px 6px; }
+            .field-group { padding: 20px 20px; margin-bottom: 20px; }
+            .enchant-option { min-width: 80px; min-height: 80px; padding: 12px 16px; }
+            .enchant-name { font-size: 0.8rem; }
+            .enchant-mult { font-size: 0.7rem; }
+            .result-value { font-size: 3.5rem; }
+            .result-hint { font-size: 0.8rem; }
+            .btn { padding: 16px 10px; font-size: 1rem; }
+            footer { font-size: 0.7rem; }
         }
-
-        /* ===== 小屏手机 ===== */
         @media (max-width: 400px) {
-            .calculator {
-                padding: 14px 10px;
-                border-radius: 18px;
-            }
-            h1 {
-                font-size: 1.4rem;
-            }
-            .mode-btn {
-                font-size: 0.65rem;
-                padding: 8px 2px;
-            }
-            .enchant-option {
-                min-width: 60px;
-                min-height: 60px;
-                padding: 8px 10px;
-            }
-            .enchant-name {
-                font-size: 0.6rem;
-            }
-            .enchant-mult {
-                font-size: 0.5rem;
-                padding: 1px 6px;
-            }
-            .custom-check {
-                width: 18px;
-                height: 18px;
-                font-size: 12px;
-            }
-            .result-value {
-                font-size: 2rem;
-            }
-            .btn {
-                font-size: 0.8rem;
-                padding: 12px 8px;
-                min-width: 80px;
-            }
+            .calculator { padding: 14px 10px; border-radius: 18px; }
+            h1 { font-size: 1.4rem; }
+            .mode-btn { font-size: 0.65rem; padding: 8px 2px; }
+            .enchant-option { min-width: 60px; min-height: 60px; padding: 8px 10px; }
+            .enchant-name { font-size: 0.6rem; }
+            .enchant-mult { font-size: 0.5rem; padding: 1px 6px; }
+            .custom-check { width: 18px; height: 18px; font-size: 12px; }
+            .result-value { font-size: 2rem; }
+            .btn { font-size: 0.8rem; padding: 12px 8px; min-width: 80px; }
         }
     </style>
 </head>
@@ -422,7 +381,6 @@
         <h1>⛏️ 裸矿运气</h1>
         <div class="subtitle">附魔倍率 · 正推反推</div>
 
-        <!-- 模式切换 -->
         <div class="mode-tabs">
             <button class="mode-btn active" id="modeForward">正推 ➜ 原始→附魔</button>
             <button class="mode-btn" id="modeReverse">反推 ➜ 附魔→原始</button>
@@ -434,24 +392,34 @@
             <input type="number" id="luckInput" value="100" step="any" min="0" placeholder="输入数值" inputmode="decimal">
         </div>
 
-        <!-- 附魔选项区域：改为横向滚动 -->
+        <!-- 新增品质选择 -->
         <div class="field-group">
-            <label style="margin-bottom: 10px;">🔮 附魔选项 (勾选生效)  ← 左右滑动</label>
-            <div class="enchant-scroll-wrapper">
-                <div class="enchant-grid" id="enchantGrid">
-                    <!-- 动态由JS生成 -->
-                </div>
+            <label>矿物品质 (影响 Poison 附魔)</label>
+            <select id="qualitySelect">
+                <option value="13041">Emp (极限 13041)</option>
+                <option value="28979">Pul (极限 28979)</option>
+                <option value="36224">Qu (极限 36224)</option>
+            </select>
+            <div style="color: #92836a; font-size: 0.7rem; margin-top: 6px; text-align: center;">
+                Poison 先乘 1.5，若结果 ≥ 极限则不再乘 1.475476，最终取整
             </div>
         </div>
 
-        <!-- 结果显示区 -->
+        <!-- 附魔选项 -->
+        <div class="field-group">
+            <label style="margin-bottom: 10px;">🔮 附魔选项 (勾选生效)  ← 左右滑动</label>
+            <div class="enchant-scroll-wrapper">
+                <div class="enchant-grid" id="enchantGrid"></div>
+            </div>
+        </div>
+
+        <!-- 结果 -->
         <div class="result-area">
             <div class="result-label" id="resultLabel">附魔后幸运值</div>
             <div class="result-value" id="resultValue">100.00</div>
             <div class="result-hint" id="resultHint">未选择任何附魔</div>
         </div>
 
-        <!-- 操作按钮 -->
         <div class="btn-group">
             <button class="btn" id="calcBtn">⚡ 计算</button>
             <button class="btn reset" id="resetBtn">🔄 重置</button>
@@ -461,6 +429,7 @@
 
     <script>
         (function() {
+            // 附魔定义（顺序固定，Poison 为索引0）
             const enchantments = [
                 { name: "Poison",    mult: 1.5 },
                 { name: "Frost",     mult: 1.4 },
@@ -473,11 +442,13 @@
                 { name: "Starfall",  mult: 1.3 },
                 { name: "ADMIN",     mult: 2.0 }
             ];
+            const POISON_EXTRA = 1.475476;  // 二次倍率
 
             const modeForwardBtn = document.getElementById('modeForward');
             const modeReverseBtn = document.getElementById('modeReverse');
             const inputLabel = document.getElementById('inputLabel');
             const luckInput = document.getElementById('luckInput');
+            const qualitySelect = document.getElementById('qualitySelect');
             const resultLabel = document.getElementById('resultLabel');
             const resultValue = document.getElementById('resultValue');
             const resultHint = document.getElementById('resultHint');
@@ -487,6 +458,7 @@
 
             let isForwardMode = true;
 
+            // 渲染附魔选项
             function renderEnchantOptions() {
                 enchantGrid.innerHTML = '';
                 enchantments.forEach((ench, index) => {
@@ -531,37 +503,18 @@
                 });
             }
 
-            function getSelectedMultipliers() {
-                const checkboxes = enchantGrid.querySelectorAll('input[type="checkbox"]');
-                const selectedMults = [];
-                checkboxes.forEach((cb, idx) => {
-                    if (cb.checked && enchantments[idx]) {
-                        selectedMults.push(enchantments[idx].mult);
+            // 获取勾选的附魔索引（升序）
+            function getCheckedIndices() {
+                const indices = [];
+                document.querySelectorAll('#enchantGrid input[type="checkbox"]').forEach(cb => {
+                    if (cb.checked) {
+                        indices.push(parseInt(cb.id.replace('ench_', '')));
                     }
                 });
-                return selectedMults;
+                return indices.sort((a,b) => a - b);
             }
 
-            function getTotalMultiplier() {
-                const mults = getSelectedMultipliers();
-                if (mults.length === 0) return 1.0;
-                return mults.reduce((acc, val) => acc * val, 1.0);
-            }
-
-            function updateResult(value, hintText) {
-                let displayValue;
-                if (value === null || value === undefined || isNaN(value)) {
-                    displayValue = '—';
-                } else {
-                    displayValue = Number(value.toFixed(6)).toString();
-                    if (displayValue.length > 12) {
-                        displayValue = Number(value).toPrecision(8);
-                    }
-                }
-                resultValue.textContent = displayValue;
-                resultHint.textContent = hintText || '';
-            }
-
+            // 核心计算
             function computeAndDisplay() {
                 const inputVal = parseFloat(luckInput.value);
                 if (isNaN(inputVal) || inputVal < 0) {
@@ -570,34 +523,105 @@
                     return;
                 }
 
-                const selectedMults = getSelectedMultipliers();
-                const totalMult = getTotalMultiplier();
+                const limit = parseFloat(qualitySelect.value);
+                const checked = getCheckedIndices();
+                const hasPoison = checked.includes(0);
+                const otherIndices = checked.filter(i => i !== 0);
+
+                let result, hintText = '';
 
                 if (isForwardMode) {
-                    resultLabel.textContent = '附魔后幸运值';
-                    if (selectedMults.length === 0) {
-                        updateResult(inputVal, '未勾选附魔，结果等于原始值');
-                    } else {
-                        const finalLuck = inputVal * totalMult;
-                        const multNames = enchantments
-                            .filter((e, i) => document.getElementById(`ench_${i}`).checked)
-                            .map(e => e.name).join(' × ');
-                        updateResult(finalLuck, `倍率累计 ×${totalMult.toFixed(4)} (${multNames})`);
+                    // ---------- 正推 ----------
+                    let current = inputVal;
+                    let poisonUsed = false; // 是否使用了二次倍率
+
+                    // 按顺序应用附魔
+                    for (let idx of checked) {
+                        if (idx === 0) {
+                            // Poison 特殊处理
+                            let afterFirst = current * 1.5;
+                            if (afterFirst >= limit) {
+                                current = afterFirst;
+                                poisonUsed = false;  // 未使用二次倍率
+                            } else {
+                                current = afterFirst * POISON_EXTRA;
+                                poisonUsed = true;
+                            }
+                        } else {
+                            current *= enchantments[idx].mult;
+                        }
                     }
-                } else {
-                    resultLabel.textContent = '原始矿物幸运值';
-                    if (selectedMults.length === 0) {
-                        updateResult(inputVal, '未勾选附魔，原始值等于输入值');
+
+                    // 最终取整（四舍五入）
+                    result = Math.round(current);
+
+                    // 生成提示
+                    let parts = [];
+                    if (hasPoison) {
+                        let poisonMult = poisonUsed ? (1.5 * POISON_EXTRA) : 1.5;
+                        parts.push(`Poison(×${poisonMult.toFixed(6)})`);
+                    }
+                    for (let idx of otherIndices) {
+                        parts.push(`${enchantments[idx].name}(×${enchantments[idx].mult})`);
+                    }
+                    if (parts.length === 0) {
+                        hintText = '未勾选附魔，结果等于原始值';
                     } else {
-                        const originalLuck = inputVal / totalMult;
-                        const multNames = enchantments
-                            .filter((e, i) => document.getElementById(`ench_${i}`).checked)
-                            .map(e => e.name).join(' × ');
-                        updateResult(originalLuck, `除以倍率 ×${totalMult.toFixed(4)} 还原原始 (${multNames})`);
+                        hintText = `倍率累计：${parts.join(' → ')}，最终取整`;
+                    }
+
+                    resultLabel.textContent = '附魔后幸运值';
+
+                } else {
+                    // ---------- 反推 ----------
+                    let current = inputVal;
+
+                    // 1. 先逆序处理非Poison附魔（后勾选的先除）
+                    // 注意：checked 是升序，逆序处理时从后往前
+                    let reversedOther = otherIndices.slice().reverse();
+                    for (let idx of reversedOther) {
+                        current /= enchantments[idx].mult;
+                    }
+
+                    // 2. 处理 Poison（如果勾选）
+                    if (hasPoison) {
+                        // 此时 current 为 v1 = 原始值 * 1.5（因为其他附魔已去除）
+                        // 判断 v1 是否 ≥ 极限
+                        if (current >= limit) {
+                            // 正推时只乘了 1.5，没有乘二次倍率
+                            current = current / 1.5;
+                            // 记录倍率信息
+                            hintText = `Poison 仅 ×1.5（因 ×1.5 后已达极限 ${limit}）`;
+                        } else {
+                            // 正推时乘了完整倍率 1.5 * 1.475476
+                            current = current / (1.5 * POISON_EXTRA);
+                            hintText = `Poison 使用完整倍率 ×${(1.5 * POISON_EXTRA).toFixed(6)}`;
+                        }
+                    } else {
+                        // 没有 Poison，则 current 已经是原始值
+                        hintText = '未勾选 Poison，直接反推其他附魔';
+                    }
+
+                    // 取整
+                    result = Math.round(current);
+                    resultLabel.textContent = '原始矿物幸运值';
+
+                    // 补充其他附魔信息
+                    if (otherIndices.length > 0) {
+                        let otherNames = otherIndices.map(i => `${enchantments[i].name}(×${enchantments[i].mult})`).join(' → ');
+                        hintText += `，其他附魔：${otherNames}`;
+                    }
+                    if (!hasPoison && otherIndices.length === 0) {
+                        hintText = '未勾选任何附魔，原始值等于输入值';
                     }
                 }
+
+                // 显示结果
+                resultValue.textContent = result.toString();
+                resultHint.textContent = hintText;
             }
 
+            // 切换模式
             function setMode(forward) {
                 isForwardMode = forward;
                 if (forward) {
@@ -614,13 +638,15 @@
                 computeAndDisplay();
             }
 
+            // 重置
             function resetAll() {
-                const checkboxes = enchantGrid.querySelectorAll('input[type="checkbox"]');
-                checkboxes.forEach(cb => cb.checked = false);
+                document.querySelectorAll('#enchantGrid input[type="checkbox"]').forEach(cb => cb.checked = false);
                 luckInput.value = 100;
+                qualitySelect.value = '13041'; // 默认 Emp
                 computeAndDisplay();
             }
 
+            // 初始化
             function init() {
                 renderEnchantOptions();
 
@@ -649,6 +675,10 @@
                     window._luckInputTimer = setTimeout(() => {
                         computeAndDisplay();
                     }, 200);
+                });
+
+                qualitySelect.addEventListener('change', () => {
+                    computeAndDisplay();
                 });
 
                 computeAndDisplay();
