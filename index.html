@@ -436,7 +436,7 @@
                 <option value="36224">Qu (极限 36224)</option>
             </select>
             <div style="color: #92836a; font-size: 0.7rem; margin-top: 6px; text-align: center;">
-                Poison 先乘 1.5，若结果 ≥ 极限则不再乘 1.4766，最终取整
+                Poison 先乘 1.5，若结果 ≥ 极限则不再乘 1.475476，最终取整
             </div>
         </div>
 
@@ -482,7 +482,7 @@
                 { name: "Starfall",  mult: 1.3 },
                 { name: "ADMIN",     mult: 2.0 }
             ];
-            const POISON_EXTRA = 1.4766;  // 二次倍率
+            const POISON_EXTRA = 1.475476;  // 二次倍率
 
             const modeForwardBtn = document.getElementById('modeForward');
             const modeReverseBtn = document.getElementById('modeReverse');
@@ -527,6 +527,7 @@
             function updatePoisonState() {
                 const poisonCb = getPoisonCheckbox();
                 if (!poisonCb) return;
+
                 if (isForwardMode) {
                     // 正推模式：Poison 始终可用，隐藏确认区域
                     poisonCb.disabled = false;
@@ -534,28 +535,25 @@
                 } else {
                     // 反推模式
                     confirmArea.style.display = 'flex';
-                    if (othersConfirmed) {
-                        // 已确认，但若其他附魔一个都没选，则禁用并重置确认状态
-                        if (!hasOtherSelected()) {
-                            othersConfirmed = false;
-                            poisonCb.disabled = true;
-                            poisonCb.checked = false;
-                            confirmStatus.textContent = '请至少选择一个其他附魔';
-                            confirmStatus.style.color = '#e0a070';
-                        } else {
+                    const hasOther = hasOtherSelected();
+
+                    if (!hasOther) {
+                        // 没有其他附魔 → Poison 直接可用，无需确认
+                        poisonCb.disabled = false;
+                        confirmStatus.textContent = '✅ 无其他附魔，可直接勾选 Poison';
+                        confirmStatus.style.color = '#8fbc8f';
+                        // 重置确认状态（避免遗留）
+                        othersConfirmed = false;
+                    } else {
+                        // 有其他附魔 → 需要确认
+                        if (othersConfirmed) {
                             poisonCb.disabled = false;
                             confirmStatus.textContent = '✅ 已确认，可勾选 Poison';
                             confirmStatus.style.color = '#8fbc8f';
-                        }
-                    } else {
-                        // 未确认
-                        poisonCb.disabled = true;
-                        poisonCb.checked = false;
-                        if (hasOtherSelected()) {
-                            confirmStatus.textContent = '请点击“确认其他附魔”以启用 Poison';
-                            confirmStatus.style.color = '#b9a57a';
                         } else {
-                            confirmStatus.textContent = '请先选择其他附魔';
+                            poisonCb.disabled = true;
+                            poisonCb.checked = false;
+                            confirmStatus.textContent = '请点击“确认其他附魔”以启用 Poison';
                             confirmStatus.style.color = '#b9a57a';
                         }
                     }
@@ -595,18 +593,17 @@
                     // 事件：变化时触发重算，并处理反推模式下的状态重置
                     checkbox.addEventListener('change', function(e) {
                         if (!isForwardMode && this.id !== 'ench_0') {
-                            // 非 Poison 的勾选变化 → 重置确认状态
+                            // 非 Poison 的勾选变化 → 重置确认状态（如果有其他附魔）
                             if (othersConfirmed) {
                                 othersConfirmed = false;
-                                updatePoisonState();
                             }
+                            updatePoisonState();
                         }
                         computeAndDisplay();
                     });
 
                     optionDiv.addEventListener('click', function(e) {
                         if (e.target !== checkbox) {
-                            // 如果 checkbox 被禁用，阻止点击切换
                             if (checkbox.disabled) return;
                             checkbox.checked = !checkbox.checked;
                             checkbox.dispatchEvent(new Event('change'));
@@ -744,7 +741,6 @@
                 }
                 // 重置确认状态
                 othersConfirmed = false;
-                // 确保 Poison 被取消勾选（反推模式下若未确认则不可用）
                 const poisonCb = getPoisonCheckbox();
                 if (poisonCb) {
                     poisonCb.checked = false;
@@ -765,10 +761,7 @@
 
             // 确认按钮逻辑
             function confirmOthers() {
-                if (isForwardMode) {
-                    // 正推模式下不应显示按钮，但以防万一
-                    return;
-                }
+                if (isForwardMode) return;
                 if (!hasOtherSelected()) {
                     confirmStatus.textContent = '⚠️ 请至少选择一个其他附魔';
                     confirmStatus.style.color = '#e0a070';
@@ -776,10 +769,10 @@
                 }
                 othersConfirmed = true;
                 updatePoisonState();
-                // 如果之前 Poison 被勾选（理论上不可能，因为禁用了），但以防万一
+                // 清空 Poison 勾选，让玩家重新决定
                 const poisonCb = getPoisonCheckbox();
                 if (poisonCb) {
-                    poisonCb.checked = false; // 确认后清空 Poison 勾选，让玩家重新决定
+                    poisonCb.checked = false;
                 }
                 computeAndDisplay();
             }
@@ -788,7 +781,6 @@
             function init() {
                 renderEnchantOptions();
 
-                // 绑定事件
                 modeForwardBtn.addEventListener('click', () => setMode(true));
                 modeReverseBtn.addEventListener('click', () => setMode(false));
 
@@ -822,7 +814,6 @@
 
                 confirmBtn.addEventListener('click', confirmOthers);
 
-                // 初始计算
                 computeAndDisplay();
             }
 
