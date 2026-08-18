@@ -211,6 +211,18 @@
             margin: 0;
             z-index: 10;
         }
+        .enchant-option input[type="checkbox"]:disabled {
+            cursor: not-allowed;
+        }
+        .enchant-option input[type="checkbox"]:disabled ~ .custom-check {
+            opacity: 0.4;
+            border-color: #5a4c3e;
+            cursor: not-allowed;
+        }
+        .enchant-option input[type="checkbox"]:disabled ~ .enchant-name,
+        .enchant-option input[type="checkbox"]:disabled ~ .enchant-mult {
+            opacity: 0.5;
+        }
         .custom-check {
             width: 22px;
             height: 22px;
@@ -337,6 +349,29 @@
             border-color: #514457;
             color: #c9b8a0;
         }
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none !important;
+        }
+        .confirm-area {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            margin-top: 10px;
+            flex-wrap: wrap;
+        }
+        .confirm-area .btn {
+            flex: 0 1 auto;
+            min-width: 140px;
+            padding: 10px 16px;
+            font-size: 0.85rem;
+        }
+        .confirm-status {
+            color: #b9a57a;
+            font-size: 0.8rem;
+        }
         footer {
             text-align: center;
             margin-top: 14px;
@@ -392,7 +427,7 @@
             <input type="number" id="luckInput" value="100" step="any" min="0" placeholder="输入数值" inputmode="decimal">
         </div>
 
-        <!-- 新增品质选择 -->
+        <!-- 品质选择 -->
         <div class="field-group">
             <label>矿物品质 (影响 Poison 附魔)</label>
             <select id="qualitySelect">
@@ -410,6 +445,11 @@
             <label style="margin-bottom: 10px;">🔮 附魔选项 (勾选生效)  ← 左右滑动</label>
             <div class="enchant-scroll-wrapper">
                 <div class="enchant-grid" id="enchantGrid"></div>
+            </div>
+            <!-- 确认区域（反推模式显示） -->
+            <div id="confirmArea" class="confirm-area" style="display: none;">
+                <button class="btn" id="confirmOthersBtn">✅ 确认其他附魔</button>
+                <span class="confirm-status" id="confirmStatus">请先选择其他附魔</span>
             </div>
         </div>
 
@@ -455,8 +495,72 @@
             const calcBtn = document.getElementById('calcBtn');
             const resetBtn = document.getElementById('resetBtn');
             const enchantGrid = document.getElementById('enchantGrid');
+            const confirmArea = document.getElementById('confirmArea');
+            const confirmBtn = document.getElementById('confirmOthersBtn');
+            const confirmStatus = document.getElementById('confirmStatus');
 
             let isForwardMode = true;
+            let othersConfirmed = false;  // 反推模式下是否已确认其他附魔
+
+            // 获取 Poison 复选框
+            function getPoisonCheckbox() {
+                return document.getElementById('ench_0');
+            }
+
+            // 获取所有非 Poison 的复选框
+            function getOtherCheckboxes() {
+                const all = document.querySelectorAll('#enchantGrid input[type="checkbox"]');
+                const others = [];
+                all.forEach(cb => {
+                    if (cb.id !== 'ench_0') others.push(cb);
+                });
+                return others;
+            }
+
+            // 检查是否有其他附魔被勾选
+            function hasOtherSelected() {
+                const others = getOtherCheckboxes();
+                return others.some(cb => cb.checked);
+            }
+
+            // 更新 Poison 的禁用状态和确认区域状态
+            function updatePoisonState() {
+                const poisonCb = getPoisonCheckbox();
+                if (!poisonCb) return;
+                if (isForwardMode) {
+                    // 正推模式：Poison 始终可用，隐藏确认区域
+                    poisonCb.disabled = false;
+                    confirmArea.style.display = 'none';
+                } else {
+                    // 反推模式
+                    confirmArea.style.display = 'flex';
+                    if (othersConfirmed) {
+                        // 已确认，但若其他附魔一个都没选，则禁用并重置确认状态
+                        if (!hasOtherSelected()) {
+                            othersConfirmed = false;
+                            poisonCb.disabled = true;
+                            poisonCb.checked = false;
+                            confirmStatus.textContent = '请至少选择一个其他附魔';
+                            confirmStatus.style.color = '#e0a070';
+                        } else {
+                            poisonCb.disabled = false;
+                            confirmStatus.textContent = '✅ 已确认，可勾选 Poison';
+                            confirmStatus.style.color = '#8fbc8f';
+                        }
+                    } else {
+                        // 未确认
+                        poisonCb.disabled = true;
+                        poisonCb.checked = false;
+                        if (hasOtherSelected()) {
+                            confirmStatus.textContent = '请点击“确认其他附魔”以启用 Poison';
+                            confirmStatus.style.color = '#b9a57a';
+                        } else {
+                            confirmStatus.textContent = '请先选择其他附魔';
+                            confirmStatus.style.color = '#b9a57a';
+                        }
+                    }
+                }
+            }
 
             // 渲染附魔选项
             function renderEnchantOptions() {
@@ -488,12 +592,22 @@
                     optionDiv.appendChild(nameSpan);
                     optionDiv.appendChild(multSpan);
 
-                    checkbox.addEventListener('change', function() {
+                    // 事件：变化时触发重算，并处理反推模式下的状态重置
+                    checkbox.addEventListener('change', function(e) {
+                        if (!isForwardMode && this.id !== 'ench_0') {
+                            // 非 Poison 的勾选变化 → 重置确认状态
+                            if (othersConfirmed) {
+                                othersConfirmed = false;
+                                updatePoisonState();
+                            }
+                        }
                         computeAndDisplay();
                     });
 
                     optionDiv.addEventListener('click', function(e) {
                         if (e.target !== checkbox) {
+                            // 如果 checkbox 被禁用，阻止点击切换
+                            if (checkbox.disabled) return;
                             checkbox.checked = !checkbox.checked;
                             checkbox.dispatchEvent(new Event('change'));
                         }
@@ -501,6 +615,9 @@
 
                     enchantGrid.appendChild(optionDiv);
                 });
+
+                // 初始更新状态
+                updatePoisonState();
             }
 
             // 获取勾选的附魔索引（升序）
@@ -533,16 +650,14 @@
                 if (isForwardMode) {
                     // ---------- 正推 ----------
                     let current = inputVal;
-                    let poisonUsed = false; // 是否使用了二次倍率
+                    let poisonUsed = false;
 
-                    // 按顺序应用附魔
                     for (let idx of checked) {
                         if (idx === 0) {
-                            // Poison 特殊处理
                             let afterFirst = current * 1.5;
                             if (afterFirst >= limit) {
                                 current = afterFirst;
-                                poisonUsed = false;  // 未使用二次倍率
+                                poisonUsed = false;
                             } else {
                                 current = afterFirst * POISON_EXTRA;
                                 poisonUsed = true;
@@ -552,10 +667,8 @@
                         }
                     }
 
-                    // 最终取整（四舍五入）
                     result = Math.round(current);
 
-                    // 生成提示
                     let parts = [];
                     if (hasPoison) {
                         let poisonMult = poisonUsed ? (1.5 * POISON_EXTRA) : 1.5;
@@ -569,15 +682,13 @@
                     } else {
                         hintText = `倍率累计：${parts.join(' → ')}，最终取整`;
                     }
-
                     resultLabel.textContent = '附魔后幸运值';
 
                 } else {
                     // ---------- 反推 ----------
                     let current = inputVal;
 
-                    // 1. 先逆序处理非Poison附魔（后勾选的先除）
-                    // 注意：checked 是升序，逆序处理时从后往前
+                    // 1. 先逆序处理非Poison附魔
                     let reversedOther = otherIndices.slice().reverse();
                     for (let idx of reversedOther) {
                         current /= enchantments[idx].mult;
@@ -585,24 +696,21 @@
 
                     // 2. 处理 Poison（如果勾选）
                     if (hasPoison) {
-                        // 此时 current 为 v1 = 原始值 * 1.5（因为其他附魔已去除）
-                        // 判断 v1 是否 ≥ 极限
-                        if (current >= limit) {
-                            // 正推时只乘了 1.5，没有乘二次倍率
+                        // 此时 current 为 v1 = 原始值 * 1.5
+                        if (current > limit) {
                             current = current / 1.5;
-                            // 记录倍率信息
-                            hintText = `Poison 仅 ×1.5（因 ×1.5 后已达极限 ${limit}）`;
+                            hintText = `Poison 仅 ×1.5（×1.5 后超过极限 ${limit}）`;
+                        } else if (current === limit) {
+                            current = current / 1.5;
+                            hintText = `Poison 仅 ×1.5（恰好达到极限 ${limit}）`;
                         } else {
-                            // 正推时乘了完整倍率 1.5 * 1.475476
                             current = current / (1.5 * POISON_EXTRA);
-                            hintText = `Poison 使用完整倍率 ×${(1.5 * POISON_EXTRA).toFixed(6)}`;
+                            hintText = `Poison 使用完整倍率 ×${(1.5 * POISON_EXTRA).toFixed(6)}（×1.5 后未达极限）`;
                         }
                     } else {
-                        // 没有 Poison，则 current 已经是原始值
                         hintText = '未勾选 Poison，直接反推其他附魔';
                     }
 
-                    // 取整
                     result = Math.round(current);
                     resultLabel.textContent = '原始矿物幸运值';
 
@@ -616,7 +724,6 @@
                     }
                 }
 
-                // 显示结果
                 resultValue.textContent = result.toString();
                 resultHint.textContent = hintText;
             }
@@ -635,6 +742,14 @@
                     inputLabel.textContent = '当前矿物幸运值 (附魔后幸运)';
                     luckInput.placeholder = '输入附魔后幸运值';
                 }
+                // 重置确认状态
+                othersConfirmed = false;
+                // 确保 Poison 被取消勾选（反推模式下若未确认则不可用）
+                const poisonCb = getPoisonCheckbox();
+                if (poisonCb) {
+                    poisonCb.checked = false;
+                }
+                updatePoisonState();
                 computeAndDisplay();
             }
 
@@ -642,7 +757,30 @@
             function resetAll() {
                 document.querySelectorAll('#enchantGrid input[type="checkbox"]').forEach(cb => cb.checked = false);
                 luckInput.value = 100;
-                qualitySelect.value = '13041'; // 默认 Emp
+                qualitySelect.value = '13041';
+                othersConfirmed = false;
+                updatePoisonState();
+                computeAndDisplay();
+            }
+
+            // 确认按钮逻辑
+            function confirmOthers() {
+                if (isForwardMode) {
+                    // 正推模式下不应显示按钮，但以防万一
+                    return;
+                }
+                if (!hasOtherSelected()) {
+                    confirmStatus.textContent = '⚠️ 请至少选择一个其他附魔';
+                    confirmStatus.style.color = '#e0a070';
+                    return;
+                }
+                othersConfirmed = true;
+                updatePoisonState();
+                // 如果之前 Poison 被勾选（理论上不可能，因为禁用了），但以防万一
+                const poisonCb = getPoisonCheckbox();
+                if (poisonCb) {
+                    poisonCb.checked = false; // 确认后清空 Poison 勾选，让玩家重新决定
+                }
                 computeAndDisplay();
             }
 
@@ -650,6 +788,7 @@
             function init() {
                 renderEnchantOptions();
 
+                // 绑定事件
                 modeForwardBtn.addEventListener('click', () => setMode(true));
                 modeReverseBtn.addEventListener('click', () => setMode(false));
 
@@ -681,6 +820,9 @@
                     computeAndDisplay();
                 });
 
+                confirmBtn.addEventListener('click', confirmOthers);
+
+                // 初始计算
                 computeAndDisplay();
             }
 
