@@ -421,39 +421,35 @@
             <button class="mode-btn" id="modeReverse">反推 ➜ 附魔→原始</button>
         </div>
 
-        <!-- 主体输入区 -->
         <div class="field-group" id="inputSection">
-            <label id="inputLabel">当前矿物幸运值 (原始基础幸运)</label>
+            <label id="inputLabel">当前矿物幸运值</label>
             <input type="number" id="luckInput" value="100" step="any" min="0" placeholder="输入数值" inputmode="decimal">
         </div>
 
-        <!-- 品质选择 -->
         <div class="field-group">
-            <label>矿物品质 (影响 Poison 附魔)</label>
+            <label>矿物品质 (裸矿极限 → 毒魔极限)</label>
             <select id="qualitySelect">
-                <option value="13041">Emp (极限 13041)</option>
-                <option value="28979">Pul (极限 28979)</option>
-                <option value="36224">Qu (极限 36224)</option>
+                <option value="8694,13041">Emp (8694 → 13041)</option>
+                <option value="19320,28979">Pul (19320 → 28979)</option>
+                <option value="24150,36224">Qu (24150 → 36224)</option>
             </select>
             <div style="color: #92836a; font-size: 0.7rem; margin-top: 6px; text-align: center;">
-                Poison 先乘 1.49994，若结果 ≥ 极限则不再乘 1.47659，最终取整
+                正推：×1.5 后判定是否达到毒魔极限<br>
+                反推：÷1.5 后判定是否达到裸矿极限
             </div>
         </div>
 
-        <!-- 附魔选项 -->
         <div class="field-group">
             <label style="margin-bottom: 10px;">🔮 附魔选项 (勾选生效)  ← 左右滑动</label>
             <div class="enchant-scroll-wrapper">
                 <div class="enchant-grid" id="enchantGrid"></div>
             </div>
-            <!-- 确认区域（反推模式显示） -->
             <div id="confirmArea" class="confirm-area" style="display: none;">
                 <button class="btn" id="confirmOthersBtn">✅ 确认其他附魔</button>
                 <span class="confirm-status" id="confirmStatus">请先选择其他附魔</span>
             </div>
         </div>
 
-        <!-- 结果 -->
         <div class="result-area">
             <div class="result-label" id="resultLabel">附魔后幸运值</div>
             <div class="result-value" id="resultValue">100.00</div>
@@ -469,9 +465,8 @@
 
     <script>
         (function() {
-            // 附魔定义（顺序固定，Poison 为索引0）
             const enchantments = [
-                { name: "Poison",    mult: 1.49994 },
+                { name: "Poison",    mult: 1.5 },
                 { name: "Frost",     mult: 1.4 },
                 { name: "Thunder",   mult: 1.5 },
                 { name: "Dustworn",  mult: 1.35 },
@@ -482,7 +477,9 @@
                 { name: "Starfall",  mult: 1.3 },
                 { name: "ADMIN",     mult: 2.0 }
             ];
-            const POISON_EXTRA = 1.47659;  // 二次倍率
+
+            const POISON_MAIN = 1.5;
+            const POISON_EXTRA = 1.475476;
 
             const modeForwardBtn = document.getElementById('modeForward');
             const modeReverseBtn = document.getElementById('modeReverse');
@@ -500,14 +497,12 @@
             const confirmStatus = document.getElementById('confirmStatus');
 
             let isForwardMode = true;
-            let othersConfirmed = false;  // 反推模式下是否已确认其他附魔
+            let othersConfirmed = false;
 
-            // 获取 Poison 复选框
             function getPoisonCheckbox() {
                 return document.getElementById('ench_0');
             }
 
-            // 获取所有非 Poison 的复选框
             function getOtherCheckboxes() {
                 const all = document.querySelectorAll('#enchantGrid input[type="checkbox"]');
                 const others = [];
@@ -517,35 +512,27 @@
                 return others;
             }
 
-            // 检查是否有其他附魔被勾选
             function hasOtherSelected() {
                 const others = getOtherCheckboxes();
                 return others.some(cb => cb.checked);
             }
 
-            // 更新 Poison 的禁用状态和确认区域状态
             function updatePoisonState() {
                 const poisonCb = getPoisonCheckbox();
                 if (!poisonCb) return;
 
                 if (isForwardMode) {
-                    // 正推模式：Poison 始终可用，隐藏确认区域
                     poisonCb.disabled = false;
                     confirmArea.style.display = 'none';
                 } else {
-                    // 反推模式
                     confirmArea.style.display = 'flex';
                     const hasOther = hasOtherSelected();
-
                     if (!hasOther) {
-                        // 没有其他附魔 → Poison 直接可用，无需确认
                         poisonCb.disabled = false;
                         confirmStatus.textContent = '✅ 无其他附魔，可直接勾选 Poison';
                         confirmStatus.style.color = '#8fbc8f';
-                        // 重置确认状态（避免遗留）
                         othersConfirmed = false;
                     } else {
-                        // 有其他附魔 → 需要确认
                         if (othersConfirmed) {
                             poisonCb.disabled = false;
                             confirmStatus.textContent = '✅ 已确认，可勾选 Poison';
@@ -560,7 +547,6 @@
                 }
             }
 
-            // 渲染附魔选项
             function renderEnchantOptions() {
                 enchantGrid.innerHTML = '';
                 enchantments.forEach((ench, index) => {
@@ -590,10 +576,8 @@
                     optionDiv.appendChild(nameSpan);
                     optionDiv.appendChild(multSpan);
 
-                    // 事件：变化时触发重算，并处理反推模式下的状态重置
                     checkbox.addEventListener('change', function(e) {
                         if (!isForwardMode && this.id !== 'ench_0') {
-                            // 非 Poison 的勾选变化 → 重置确认状态（如果有其他附魔）
                             if (othersConfirmed) {
                                 othersConfirmed = false;
                             }
@@ -613,11 +597,9 @@
                     enchantGrid.appendChild(optionDiv);
                 });
 
-                // 初始更新状态
                 updatePoisonState();
             }
 
-            // 获取勾选的附魔索引（升序）
             function getCheckedIndices() {
                 const indices = [];
                 document.querySelectorAll('#enchantGrid input[type="checkbox"]').forEach(cb => {
@@ -628,7 +610,7 @@
                 return indices.sort((a,b) => a - b);
             }
 
-            // 核心计算
+            // ---- 核心计算 ----
             function computeAndDisplay() {
                 const inputVal = parseFloat(luckInput.value);
                 if (isNaN(inputVal) || inputVal < 0) {
@@ -637,7 +619,10 @@
                     return;
                 }
 
-                const limit = parseFloat(qualitySelect.value);
+                const raw = qualitySelect.value.split(',').map(Number);
+                const rawLimit = raw[0];      // 裸矿极限
+                const poisonLimit = raw[1];   // 毒魔极限
+
                 const checked = getCheckedIndices();
                 const hasPoison = checked.includes(0);
                 const otherIndices = checked.filter(i => i !== 0);
@@ -651,9 +636,10 @@
 
                     for (let idx of checked) {
                         if (idx === 0) {
-                            let afterFirst = current * 1.5;
-                            if (afterFirst >= limit) {
-                                current = afterFirst;
+                            let afterFirst = current * POISON_MAIN;
+                            let testVal = Math.floor(afterFirst) + 1;
+                            if (testVal >= poisonLimit) {
+                                current = poisonLimit;
                                 poisonUsed = false;
                             } else {
                                 current = afterFirst * POISON_EXTRA;
@@ -668,8 +654,9 @@
 
                     let parts = [];
                     if (hasPoison) {
-                        let poisonMult = poisonUsed ? (1.5 * POISON_EXTRA) : 1.5;
-                        parts.push(`Poison(×${poisonMult.toFixed(6)})`);
+                        let poisonMult = poisonUsed ? (POISON_MAIN * POISON_EXTRA) : POISON_MAIN;
+                        let extra = poisonUsed ? '' : ' (达到毒魔极限，设为' + poisonLimit + ')';
+                        parts.push(`Poison(×${poisonMult.toFixed(6)}${extra})`);
                     }
                     for (let idx of otherIndices) {
                         parts.push(`${enchantments[idx].name}(×${enchantments[idx].mult})`);
@@ -685,24 +672,20 @@
                     // ---------- 反推 ----------
                     let current = inputVal;
 
-                    // 1. 先逆序处理非Poison附魔
                     let reversedOther = otherIndices.slice().reverse();
                     for (let idx of reversedOther) {
                         current /= enchantments[idx].mult;
                     }
 
-                    // 2. 处理 Poison（如果勾选）
                     if (hasPoison) {
-                        // 此时 current 为 v1 = 原始值 * 1.5
-                        if (current > limit) {
-                            current = current / 1.5;
-                            hintText = `Poison 仅 ×1.5（×1.5 后超过极限 ${limit}）`;
-                        } else if (current === limit) {
-                            current = current / 1.5;
-                            hintText = `Poison 仅 ×1.5（恰好达到极限 ${limit}）`;
+                        let afterDiv = current / POISON_MAIN;
+                        let testVal = Math.floor(afterDiv) + 1;
+                        if (testVal >= rawLimit) {
+                            current = rawLimit;
+                            hintText = `Poison 达到裸矿极限，设为 ${rawLimit}`;
                         } else {
-                            current = current / (1.5 * POISON_EXTRA);
-                            hintText = `Poison 使用完整倍率 ×${(1.5 * POISON_EXTRA).toFixed(6)}（×1.5 后未达极限）`;
+                            current = afterDiv / POISON_EXTRA;
+                            hintText = `Poison 未达裸矿极限，使用完整倍率还原`;
                         }
                     } else {
                         hintText = '未勾选 Poison，直接反推其他附魔';
@@ -711,7 +694,6 @@
                     result = Math.round(current);
                     resultLabel.textContent = '原始矿物幸运值';
 
-                    // 补充其他附魔信息
                     if (otherIndices.length > 0) {
                         let otherNames = otherIndices.map(i => `${enchantments[i].name}(×${enchantments[i].mult})`).join(' → ');
                         hintText += `，其他附魔：${otherNames}`;
@@ -725,7 +707,6 @@
                 resultHint.textContent = hintText;
             }
 
-            // 切换模式
             function setMode(forward) {
                 isForwardMode = forward;
                 if (forward) {
@@ -739,7 +720,6 @@
                     inputLabel.textContent = '当前矿物幸运值 (附魔后幸运)';
                     luckInput.placeholder = '输入附魔后幸运值';
                 }
-                // 重置确认状态
                 othersConfirmed = false;
                 const poisonCb = getPoisonCheckbox();
                 if (poisonCb) {
@@ -749,17 +729,15 @@
                 computeAndDisplay();
             }
 
-            // 重置
             function resetAll() {
                 document.querySelectorAll('#enchantGrid input[type="checkbox"]').forEach(cb => cb.checked = false);
                 luckInput.value = 100;
-                qualitySelect.value = '13041';
+                qualitySelect.value = '8694,13041';
                 othersConfirmed = false;
                 updatePoisonState();
                 computeAndDisplay();
             }
 
-            // 确认按钮逻辑
             function confirmOthers() {
                 if (isForwardMode) return;
                 if (!hasOtherSelected()) {
@@ -769,7 +747,6 @@
                 }
                 othersConfirmed = true;
                 updatePoisonState();
-                // 清空 Poison 勾选，让玩家重新决定
                 const poisonCb = getPoisonCheckbox();
                 if (poisonCb) {
                     poisonCb.checked = false;
@@ -777,7 +754,6 @@
                 computeAndDisplay();
             }
 
-            // 初始化
             function init() {
                 renderEnchantOptions();
 
