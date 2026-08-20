@@ -644,6 +644,7 @@
     </style>
 </head>
 <body>
+    <body>
     <div class="calculator">
         <h1>⛏️ 裸矿运气</h1>
         <div class="subtitle">附魔倍率 · 正推反推</div>
@@ -682,15 +683,15 @@
                 </div>
 
                 <div class="field-group">
-                    <label>🧪 二次倍率 K 值 <span style="color:#92836a;font-weight:400;font-size:0.75rem;">（默认 1.47659）</span></label>
+                    <label>🧪 二次倍率 K 值 <span style="color:#92836a;font-weight:400;font-size:0.7rem;">（固定值，无需反推）</span></label>
                     <input type="number" id="extraKInput" value="1.47659" step="0.000001" min="1.47" max="1.48" inputmode="decimal">
-                    <div style="color: #6d604c; font-size: 0.6rem; margin-top: 4px; text-align: center;">
-                        💡 实测建议范围 <strong style="color:#b9a57a;">1.4726 ~ 1.4766</strong>，调整后自动重算
+                    <div style="color: #6d604c; font-size: 0.55rem; margin-top: 4px; text-align: center;">
+                        💡 裸矿极限为固定值（Emp:8694 / Pul:19320 / Qu:24150），<strong style="color:#b9a57a;">无需反推 K 值</strong>
                     </div>
                 </div>
 
                 <!-- 附魔选项 -->
-                <div class="section-title" style="margin-top:6px;">
+                <div class="section-title" style="margin-top:4px;">
                     🔮 附魔选项
                     <span class="badge">勾选生效</span>
                 </div>
@@ -716,38 +717,46 @@
                 </div>
             </div>
 
-            <!-- ===== 右栏：K 值反推工具 ===== -->
+            <!-- ===== 右栏：K 值参考（非必须） ===== -->
             <div class="col-right">
                 <div class="section-title">
-                    🔍 K 值反推
-                    <span class="badge">辅助</span>
+                    📌 K 值参考
+                    <span class="badge">固定</span>
                 </div>
 
-                <div class="k-tool-box">
-                    <div class="k-input-row">
-                        <input type="number" id="kRawInput" placeholder="裸矿值" step="any" min="0" inputmode="decimal">
-                        <input type="number" id="kPoisonInput" placeholder="毒魔后值" step="any" min="0" inputmode="decimal">
-                        <button class="btn" id="kCalcBtn">反推</button>
+                <div class="k-tool-box" style="border-color:#4e3d54; background:rgba(0,0,0,0.15);">
+                    <div style="color:#b9a57a; font-size:0.8rem; text-align:center; margin-bottom:8px; line-height:1.6;">
+                        ✅ <strong>裸矿极限为固定值</strong><br>
+                        <span style="color:#6d604c; font-size:0.65rem;">
+                            Emp: 8694 &nbsp;|&nbsp; Pul: 19320 &nbsp;|&nbsp; Qu: 24150
+                        </span><br>
+                        <span style="color:#6d604c; font-size:0.6rem;">
+                            K 值已固定为 1.47659，<strong>无需反推</strong>
+                        </span>
                     </div>
-
-                    <div class="k-result-display">
-                        <div class="k-label">实际 Poison 倍率</div>
-                        <div class="k-value" id="kResultDisplay">—</div>
-                        <div class="k-detail" id="kResultDetail">输入裸矿值和毒魔后值，点击「反推」</div>
-                    </div>
-
-                    <div class="k-tip">
-                        ⚡ 反推结果可直接复制到左侧 K 值输入框
+                    <div style="border-top:1px solid #3a3140; padding-top:8px; margin-top:6px;">
+                        <div style="color:#92836a; font-size:0.6rem; text-align:center; line-height:1.5;">
+                            💡 下方工具仅用于验证实测数据，<br>日常使用无需操作
+                        </div>
+                        <div class="k-input-row" style="display:flex; gap:4px; margin-top:6px; flex-wrap:wrap;">
+                            <input type="number" id="kRawInput" placeholder="裸矿值" step="any" min="0" inputmode="decimal" style="flex:1; min-width:50px; background:#1c1725; border:2px solid #5b4b3f; border-radius:20px; padding:6px 8px; font-size:0.8rem; font-weight:600; color:#ffe6b0; outline:none; text-align:center;">
+                            <input type="number" id="kPoisonInput" placeholder="毒魔后值" step="any" min="0" inputmode="decimal" style="flex:1; min-width:50px; background:#1c1725; border:2px solid #5b4b3f; border-radius:20px; padding:6px 8px; font-size:0.8rem; font-weight:600; color:#ffe6b0; outline:none; text-align:center;">
+                            <button class="btn" id="kCalcBtn" style="flex:0.3; min-width:50px; padding:6px 8px; font-size:0.65rem; background:#3f3344; border:1px solid #6c5b49; border-radius:20px; color:#ecd9b0; cursor:pointer;">验证</button>
+                        </div>
+                        <div class="k-result-display" style="text-align:center; padding:4px 0 2px 0;">
+                            <div class="k-label" style="color:#b9a57a; font-size:0.6rem;">K 值</div>
+                            <div class="k-value" id="kResultDisplay" style="font-size:1.2rem; font-weight:700; color:#ffdf9e; text-shadow:0 0 20px #b68b4c;">—</div>
+                            <div class="k-detail" id="kResultDetail" style="color:#92836a; font-size:0.5rem; word-break:break-all;">输入值后点击「验证」</div>
+                        </div>
                     </div>
                 </div>
 
-                <!-- 右侧可放一些额外说明或留白 -->
-                <div style="margin-top:16px; padding:12px; background:rgba(0,0,0,0.2); border-radius:16px; border:1px solid #3a3140;">
-                    <div style="color:#92836a; font-size:0.7rem; text-align:center; line-height:1.6;">
-                        💡 使用提示<br>
-                        1. 在左侧输入数值并选择品质<br>
+                <div class="help-box" style="margin-top:8px; padding:8px 10px; background:rgba(0,0,0,0.2); border-radius:12px; border:1px solid #3a3140;">
+                    <div style="color:#92836a; font-size:0.6rem; text-align:center; line-height:1.6;">
+                        💡 <strong>使用提示</strong><br>
+                        1. 左侧输入数值并选择品质<br>
                         2. 勾选附魔 → 结果自动更新<br>
-                        3. 用右侧工具反推 K 值微调精度
+                        3. K 值已固定，右侧工具仅作验证
                     </div>
                 </div>
             </div>
@@ -759,7 +768,7 @@
 
     <script>
         // =============================================================
-        // JavaScript 完全保留，逻辑不变
+        // JavaScript 完整保留，逻辑不变
         // =============================================================
         (function() {
             const enchantments = [
@@ -1062,7 +1071,7 @@
                 computeAndDisplay();
             }
 
-            // ---- K 值反推 ----
+            // ---- K 值验证 ----
             function calcKValue() {
                 const raw = parseFloat(kRawInput.value);
                 const poison = parseFloat(kPoisonInput.value);
