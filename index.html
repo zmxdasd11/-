@@ -995,8 +995,7 @@
                         let afterDiv = current / POISON_MAIN;
                         let testVal = Math.floor(afterDiv) + 1;
                         if (testVal >= rawLimit) {
-                            current = rawLimit;
-                            hintText = `Poison 达到裸矿极限，设为 ${rawLimit}`;
+                            current = afterDiv;
                         } else {
                             current = afterDiv / POISON_EXTRA;
                             hintText =
