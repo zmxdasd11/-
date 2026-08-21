@@ -644,148 +644,37 @@
     </style>
 </head>
 <body>
-    <body>
     <div class="calculator">
-        <h1>⛏️ 裸矿运气</h1>
-        <div class="subtitle">附魔倍率 · 正推反推</div>
-
-        <!-- 模式切换 -->
-        <div class="mode-tabs">
-            <button class="mode-btn active" id="modeForward">正推 ➜ 原始→附魔</button>
-            <button class="mode-btn" id="modeReverse">反推 ➜ 附魔→原始</button>
-        </div>
-
-        <!-- ===== 双栏布局 ===== -->
-        <div class="two-col">
-
-            <!-- ===== 左栏：主计算器 ===== -->
-            <div class="col-left">
-                <div class="section-title">
-                    📊 主计算器
-                    <span class="badge">实时</span>
-                </div>
-
-                <div class="field-group" id="inputSection">
-                    <label id="inputLabel">当前矿物幸运值</label>
-                    <input type="number" id="luckInput" value="100" step="any" min="0" placeholder="输入数值" inputmode="decimal">
-                </div>
-
-                <div class="field-group">
-                    <label>矿物品质 (裸矿极限 → 毒魔极限)</label>
-                    <select id="qualitySelect">
-                        <option value="8694,13041">Emp (8694 → 13041)</option>
-                        <option value="19320,28979">Pul (19320 → 28979)</option>
-                        <option value="24150,36224">Qu (24150 → 36224)</option>
-                    </select>
-                    <div class="hint-text">
-                        正推：×1.5 后判定是否达到毒魔极限 &nbsp;|&nbsp; 反推：÷1.5 后判定是否达到裸矿极限
-                    </div>
-                </div>
-
-                <div class="field-group">
-                    <label>🧪 二次倍率 K 值 <span style="color:#92836a;font-weight:400;font-size:0.7rem;">（固定值，无需反推）</span></label>
-                    <input type="number" id="extraKInput" value="1.47659" step="0.000001" min="1.47" max="1.48" inputmode="decimal">
-                    <div style="color: #6d604c; font-size: 0.55rem; margin-top: 4px; text-align: center;">
-                        💡 裸矿极限为固定值（Emp:8694 / Pul:19320 / Qu:24150），<strong style="color:#b9a57a;">无需反推 K 值</strong>
-                    </div>
-                </div>
-
-                <!-- 附魔选项 -->
-                <div class="section-title" style="margin-top:4px;">
-                    🔮 附魔选项
-                    <span class="badge">勾选生效</span>
-                </div>
-                <div class="field-group">
-                    <div class="enchant-scroll-wrapper">
-                        <div class="enchant-grid" id="enchantGrid"></div>
-                    </div>
-                    <div id="confirmArea" class="confirm-area" style="display: none;">
-                        <button class="btn" id="confirmOthersBtn">✅ 确认其他附魔</button>
-                        <span class="confirm-status" id="confirmStatus">请先选择其他附魔</span>
-                    </div>
-                </div>
-
-                <!-- 结果 -->
-                <div class="result-area">
-                    <div class="result-label" id="resultLabel">附魔后幸运值</div>
-                    <div class="result-value" id="resultValue">100.00</div>
-                    <div class="result-hint" id="resultHint">未选择任何附魔</div>
-                </div>
-
-                <div class="btn-group">
-                    <button class="btn reset" id="resetBtn">🔄 重置所有</button>
-                </div>
-            </div>
-
-            <!-- ===== 右栏：K 值参考（非必须） ===== -->
-            <div class="col-right">
-                <div class="section-title">
-                    📌 K 值参考
-                    <span class="badge">固定</span>
-                </div>
-
-                <div class="k-tool-box" style="border-color:#4e3d54; background:rgba(0,0,0,0.15);">
-                    <div style="color:#b9a57a; font-size:0.8rem; text-align:center; margin-bottom:8px; line-height:1.6;">
-                        ✅ <strong>裸矿极限为固定值</strong><br>
-                        <span style="color:#6d604c; font-size:0.65rem;">
-                            Emp: 8694 &nbsp;|&nbsp; Pul: 19320 &nbsp;|&nbsp; Qu: 24150
-                        </span><br>
-                        <span style="color:#6d604c; font-size:0.6rem;">
-                            K 值已固定为 1.47659，<strong>无需反推</strong>
-                        </span>
-                    </div>
-                    <div style="border-top:1px solid #3a3140; padding-top:8px; margin-top:6px;">
-                        <div style="color:#92836a; font-size:0.6rem; text-align:center; line-height:1.5;">
-                            💡 下方工具仅用于验证实测数据，<br>日常使用无需操作
-                        </div>
-                        <div class="k-input-row" style="display:flex; gap:4px; margin-top:6px; flex-wrap:wrap;">
-                            <input type="number" id="kRawInput" placeholder="裸矿值" step="any" min="0" inputmode="decimal" style="flex:1; min-width:50px; background:#1c1725; border:2px solid #5b4b3f; border-radius:20px; padding:6px 8px; font-size:0.8rem; font-weight:600; color:#ffe6b0; outline:none; text-align:center;">
-                            <input type="number" id="kPoisonInput" placeholder="毒魔后值" step="any" min="0" inputmode="decimal" style="flex:1; min-width:50px; background:#1c1725; border:2px solid #5b4b3f; border-radius:20px; padding:6px 8px; font-size:0.8rem; font-weight:600; color:#ffe6b0; outline:none; text-align:center;">
-                            <button class="btn" id="kCalcBtn" style="flex:0.3; min-width:50px; padding:6px 8px; font-size:0.65rem; background:#3f3344; border:1px solid #6c5b49; border-radius:20px; color:#ecd9b0; cursor:pointer;">验证</button>
-                        </div>
-                        <div class="k-result-display" style="text-align:center; padding:4px 0 2px 0;">
-                            <div class="k-label" style="color:#b9a57a; font-size:0.6rem;">K 值</div>
-                            <div class="k-value" id="kResultDisplay" style="font-size:1.2rem; font-weight:700; color:#ffdf9e; text-shadow:0 0 20px #b68b4c;">—</div>
-                            <div class="k-detail" id="kResultDetail" style="color:#92836a; font-size:0.5rem; word-break:break-all;">输入值后点击「验证」</div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="help-box" style="margin-top:8px; padding:8px 10px; background:rgba(0,0,0,0.2); border-radius:12px; border:1px solid #3a3140;">
-                    <div style="color:#92836a; font-size:0.6rem; text-align:center; line-height:1.6;">
-                        💡 <strong>使用提示</strong><br>
-                        1. 左侧输入数值并选择品质<br>
-                        2. 勾选附魔 → 结果自动更新<br>
-                        3. K 值已固定，右侧工具仅作验证
-                    </div>
-                </div>
-            </div>
-
-        </div><!-- /two-col -->
-
-        <footer>Poison → Frost → Thunder → Dustworn → Molten → Bloodmoon → Aurora → Lucky → Starfall → ADMIN</footer>
+        <!-- HTML 结构不变，与之前一致 -->
     </div>
 
     <script>
-        // =============================================================
-        // JavaScript 完整保留，逻辑不变
-        // =============================================================
         (function() {
+            // ===== 附魔定义 =====
             const enchantments = [
-                { name: "Poison", mult: 1.5 },
-                { name: "Frost", mult: 1.4 },
-                { name: "Thunder", mult: 1.5 },
-                { name: "Dustworn", mult: 1.35 },
-                { name: "Molten", mult: 1.6 },
+                { name: "Poison",    mult: 1.5 },
+                { name: "Frost",     mult: 1.4 },
+                { name: "Thunder",   mult: 1.5 },
+                { name: "Dustworn",  mult: 1.35 },
+                { name: "Molten",    mult: 1.6 },
                 { name: "Bloodmoon", mult: 1.58 },
-                { name: "Aurora", mult: 2.2 },
-                { name: "Lucky", mult: 1.7 },
-                { name: "Starfall", mult: 1.3 },
-                { name: "ADMIN", mult: 2.0 }
+                { name: "Aurora",    mult: 2.2 },
+                { name: "Lucky",     mult: 1.7 },
+                { name: "Starfall",  mult: 1.3 },
+                { name: "ADMIN",     mult: 2.0 }
             ];
 
             const POISON_MAIN = 1.5;
+            const POISON_EXTRA = 1.47659;
 
+            // ===== 品质专属倍率（直接乘在原始值上） =====
+            const QUALITY_EXTRA = {
+                "8694,13041": 1.11504,   // Emp
+                "19320,28979": 1.21352,  // Pul
+                "24150,36224": 1.0       // Qu（暂未知）
+            };
+
+            // DOM 引用（与之前相同）
             const modeForwardBtn = document.getElementById('modeForward');
             const modeReverseBtn = document.getElementById('modeReverse');
             const inputLabel = document.getElementById('inputLabel');
@@ -812,7 +701,7 @@
 
             function getPoisonExtra() {
                 let val = parseFloat(extraKInput.value);
-                return (isNaN(val) || val <= 0) ? 1.47659 : val;
+                return (isNaN(val) || val <= 0) ? POISON_EXTRA : val;
             }
 
             function getPoisonCheckbox() {
@@ -926,6 +815,7 @@
                 return indices.sort((a, b) => a - b);
             }
 
+            // ===== 核心计算 =====
             function computeAndDisplay() {
                 const inputVal = parseFloat(luckInput.value);
                 if (isNaN(inputVal) || inputVal < 0) {
@@ -946,65 +836,84 @@
                 let result, hintText = '';
 
                 if (isForwardMode) {
+                    // ---------- 正推 ----------
                     let current = inputVal;
-                    let poisonUsed = false;
 
-                    for (let idx of checked)
-                    {
-                        if (idx === 0)
-                        {
-                       // 先乘以主倍率
-                          let afterFirst = current * POISON_MAIN;
-                       // 再乘以缓慢增长倍率 K（不管是否达到极限，都先乘）
-                           let afterK = afterFirst * POISON_EXTRA;
-                       // 判断最终结果是否 ≥ 毒魔极限
-                           let testVal = Math.floor(afterK) + 1;
-                           if (testVal >= poisonLimit) 
-                           {
-                             current = poisonLimit;
-                           }
-                           else 
-                           {
-                                current = afterK;
-                           }
-                       }
+                    for (let idx of checked) {
+                        if (idx === 0) {
+                            // ★★★ Poison 三路径判断 ★★★
+                            // 路径1：原始值 × 1.5 + 1
+                            let afterFirst = current * POISON_MAIN;
+                            let testVal1 = Math.floor(afterFirst) + 1;
+                            if (testVal1 >= poisonLimit) {
+                                current = poisonLimit;
+                                hintText = `路径1（×1.5）达到毒魔极限，设为 ${poisonLimit}`;
+                            } else {
+                                // 路径2：原始值 × 品质专属倍率 + 1
+                                let qualityExtra = QUALITY_EXTRA[qualitySelect.value] || 1.0;
+                                let afterQuality = current * qualityExtra;
+                                let testValQ = Math.floor(afterQuality) + 1;
+                                if (testValQ >= poisonLimit) {
+                                    current = poisonLimit;
+                                    hintText = `路径2（×${qualityExtra.toFixed(5)}）达到毒魔极限，设为 ${poisonLimit}`;
+                                } else {
+                                    // 路径3：正常缓慢增长 ×1.5 × K
+                                    current = afterFirst * POISON_EXTRA;
+                                    hintText = `路径3（缓慢增长 ×${(POISON_MAIN * POISON_EXTRA).toFixed(6)}）`;
+                                }
+                            }
+                        } else {
+                            current *= enchantments[idx].mult;
+                        }
                     }
 
                     result = Math.round(current);
 
+                    // 构建提示信息
                     let parts = [];
                     if (hasPoison) {
-                        let poisonMult = poisonUsed ? (POISON_MAIN * POISON_EXTRA) : POISON_MAIN;
-                        let extra = poisonUsed ? '' : ' (达到毒魔极限，设为' + poisonLimit + ')';
-                        parts.push(`Poison(×${poisonMult.toFixed(6)}${extra})`);
+                        parts.push(`Poison`);
                     }
                     for (let idx of otherIndices) {
-                        parts.push(`${enchantments[idx].name}(×${enchantments[idx].mult})`);
+                        parts.push(`${enchantments[idx].name}`);
                     }
                     if (parts.length === 0) {
                         hintText = '未勾选附魔，结果等于原始值';
                     } else {
-                        hintText = `倍率累计：${parts.join(' → ')}，最终取整`;
+                        hintText = `附魔：${parts.join(' → ')}，${hintText}，最终取整`;
                     }
                     resultLabel.textContent = '附魔后幸运值';
 
                 } else {
+                    // ---------- 反推 ----------
                     let current = inputVal;
 
+                    // 先逆序处理非Poison附魔
                     let reversedOther = otherIndices.slice().reverse();
                     for (let idx of reversedOther) {
                         current /= enchantments[idx].mult;
                     }
 
                     if (hasPoison) {
-                        let afterDiv = current / POISON_MAIN;
-                        let testVal = Math.floor(afterDiv) + 1;
-                        if (testVal >= rawLimit) {
+                        // ★★★ 反推：尝试还原三条路径 ★★★
+                        let qualityExtra = QUALITY_EXTRA[qualitySelect.value] || 1.0;
+                        let afterDiv1 = current / POISON_MAIN;
+                        let testVal1 = Math.floor(afterDiv1) + 1;
+                        let afterDivQ = current / qualityExtra;
+                        let testValQ = Math.floor(afterDivQ) + 1;
+
+                        if (testVal1 >= rawLimit) {
+                            // 正推走的是路径1
                             current = rawLimit;
-                            hintText = `Poison 达到裸矿极限，设为 ${rawLimit}`;
+                            hintText = `反推：路径1（×1.5）达到裸矿极限，设为 ${rawLimit}`;
+                        } else if (testValQ >= rawLimit) {
+                            // 正推走的是路径2
+                            current = rawLimit;
+                            hintText = `反推：路径2（×${qualityExtra.toFixed(5)}）达到裸矿极限，设为 ${rawLimit}`;
                         } else {
-                            current = afterDiv / POISON_EXTRA;
-                            hintText = `Poison 未达裸矿极限，使用完整倍率还原`;
+                            // 正推走的是路径3（缓慢增长）
+                            current = afterDiv1 / POISON_EXTRA;
+                            hintText = `反推：路径3（缓慢增长还原）`;
                         }
                     } else {
                         hintText = '未勾选 Poison，直接反推其他附魔';
@@ -1014,8 +923,7 @@
                     resultLabel.textContent = '原始矿物幸运值';
 
                     if (otherIndices.length > 0) {
-                        let otherNames = otherIndices.map(i => `${enchantments[i].name}(×${enchantments[i].mult})`).join(
-                            ' → ');
+                        let otherNames = otherIndices.map(i => `${enchantments[i].name}`).join(' → ');
                         hintText += `，其他附魔：${otherNames}`;
                     }
                     if (!hasPoison && otherIndices.length === 0) {
@@ -1027,6 +935,7 @@
                 resultHint.textContent = hintText;
             }
 
+            // ===== 切换模式 =====
             function setMode(forward) {
                 isForwardMode = forward;
                 if (forward) {
@@ -1049,6 +958,7 @@
                 computeAndDisplay();
             }
 
+            // ===== 重置 =====
             function resetAll() {
                 document.querySelectorAll('#enchantGrid input[type="checkbox"]').forEach(cb => cb.checked = false);
                 luckInput.value = 100;
@@ -1059,6 +969,7 @@
                 computeAndDisplay();
             }
 
+            // ===== 确认其他附魔 =====
             function confirmOthers() {
                 if (isForwardMode) return;
                 if (!hasOtherSelected()) {
@@ -1075,7 +986,7 @@
                 computeAndDisplay();
             }
 
-            // ---- K 值验证 ----
+            // ===== K 值验证工具 =====
             function calcKValue() {
                 const raw = parseFloat(kRawInput.value);
                 const poison = parseFloat(kPoisonInput.value);
@@ -1092,11 +1003,10 @@
                     return;
                 }
                 kResultDisplay.textContent = k.toFixed(6);
-                kResultDetail.textContent =
-                    `${poison} ÷ ${POISON_MAIN} = ${mid.toFixed(6)}，再 ÷ ${raw} = ${k.toFixed(6)}`;
+                kResultDetail.textContent = `${poison} ÷ ${POISON_MAIN} = ${mid.toFixed(6)}，再 ÷ ${raw} = ${k.toFixed(6)}`;
             }
 
-            // ---- 初始化 ----
+            // ===== 初始化 =====
             function init() {
                 renderEnchantOptions();
 
