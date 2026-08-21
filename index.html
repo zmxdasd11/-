@@ -995,7 +995,7 @@
                         let afterDiv = current / POISON_MAIN;
                         let testVal = Math.floor(afterDiv) + 1;
                         if (testVal >= rawLimit) {
-                            current = afterDiv;
+                            current = rawLimit;
                         } else {
                             current = afterDiv / POISON_EXTRA;
                             hintText =
