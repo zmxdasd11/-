@@ -841,27 +841,29 @@
 
                     for (let idx of checked) {
                         if (idx === 0) {
-                            // ★★★ Poison 三路径判断 ★★★
-                            // 路径1：原始值 × 1.5 + 1
-                            let afterFirst = current * POISON_MAIN;
-                            let testVal1 = Math.floor(afterFirst) + 1;
-                            if (testVal1 >= poisonLimit) {
-                                current = poisonLimit;
-                                hintText = `路径1（×1.5）达到毒魔极限，设为 ${poisonLimit}`;
-                            } else {
-                                // 路径2：原始值 × 品质专属倍率 + 1
-                                let qualityExtra = QUALITY_EXTRA[qualitySelect.value] || 1.0;
-                                let afterQuality = current * qualityExtra;
-                                let testValQ = Math.floor(afterQuality) + 1;
-                                if (testValQ >= poisonLimit) {
-                                    current = poisonLimit;
-                                    hintText = `路径2（×${qualityExtra.toFixed(5)}）达到毒魔极限，设为 ${poisonLimit}`;
-                                } else {
-                                    // 路径3：正常缓慢增长 ×1.5 × K
-                                    current = afterFirst * POISON_EXTRA;
-                                    hintText = `路径3（缓慢增长 ×${(POISON_MAIN * POISON_EXTRA).toFixed(6)}）`;
-                                }
-                            }
+    // 先算 ×1.5
+    let afterFirst = current * POISON_MAIN;
+    
+    // 路径1：×1.5 + 1 判断
+    let testVal1 = Math.floor(afterFirst) + 1;
+    if (testVal1 >= poisonLimit) {
+        current = poisonLimit;
+        hintText = `路径1（×1.5）达到毒魔极限，设为 ${poisonLimit}`;
+    } else {
+        // 路径2：×1.5 × 品质专属倍率 + 1 判断
+        let qualityExtra = QUALITY_EXTRA[qualitySelect.value] || 1.0;
+        let afterQuality = afterFirst * qualityExtra;
+        let testValQ = Math.floor(afterQuality) + 1;
+        if (testValQ >= poisonLimit) {
+            current = poisonLimit;
+            hintText = `路径2（×1.5 × ${qualityExtra.toFixed(5)}）达到毒魔极限，设为 ${poisonLimit}`;
+        } else {
+            // 路径3：正常缓慢增长 ×1.5 × 1.47659
+            current = afterFirst * POISON_EXTRA;
+            hintText = `路径3（缓慢增长 ×${(POISON_MAIN * POISON_EXTRA).toFixed(6)}）`;
+        }
+    }
+}
                         } else {
                             current *= enchantments[idx].mult;
                         }
@@ -895,29 +897,30 @@
                     }
 
                     if (hasPoison) {
-                        // ★★★ 反推：尝试还原三条路径 ★★★
-                        let qualityExtra = QUALITY_EXTRA[qualitySelect.value] || 1.0;
-                        let afterDiv1 = current / POISON_MAIN;
-                        let testVal1 = Math.floor(afterDiv1) + 1;
-                        let afterDivQ = current / qualityExtra;
-                        let testValQ = Math.floor(afterDivQ) + 1;
+    let qualityExtra = QUALITY_EXTRA[qualitySelect.value] || 1.0;
+    
+    // 尝试还原路径1：除以 1.5
+    let afterDiv1 = current / POISON_MAIN;
+    let testVal1 = Math.floor(afterDiv1) + 1;
+    
+    // 尝试还原路径2：除以 1.5 再除以品质倍率
+    let afterDivQ = current / (POISON_MAIN * qualityExtra);
+    let testValQ = Math.floor(afterDivQ) + 1;
 
-                        if (testVal1 >= rawLimit) {
-                            // 正推走的是路径1
-                            current = rawLimit;
-                            hintText = `反推：路径1（×1.5）达到裸矿极限，设为 ${rawLimit}`;
-                        } else if (testValQ >= rawLimit) {
-                            // 正推走的是路径2
-                            current = rawLimit;
-                            hintText = `反推：路径2（×${qualityExtra.toFixed(5)}）达到裸矿极限，设为 ${rawLimit}`;
-                        } else {
-                            // 正推走的是路径3（缓慢增长）
-                            current = afterDiv1 / POISON_EXTRA;
-                            hintText = `反推：路径3（缓慢增长还原）`;
-                        }
-                    } else {
-                        hintText = '未勾选 Poison，直接反推其他附魔';
-                    }
+    if (testVal1 >= rawLimit) {
+        // 正推走的是路径1
+        current = rawLimit;
+        hintText = `反推：路径1（×1.5）达到裸矿极限，设为 ${rawLimit}`;
+    } else if (testValQ >= rawLimit) {
+        // 正推走的是路径2
+        current = rawLimit;
+        hintText = `反推：路径2（×1.5 × ${qualityExtra.toFixed(5)}）达到裸矿极限，设为 ${rawLimit}`;
+    } else {
+        // 正推走的是路径3
+        current = afterDiv1 / POISON_EXTRA;
+        hintText = `反推：路径3（缓慢增长还原）`;
+    }
+}
 
                     result = Math.round(current);
                     resultLabel.textContent = '原始矿物幸运值';
