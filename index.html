@@ -949,20 +949,25 @@
                     let current = inputVal;
                     let poisonUsed = false;
 
-                    for (let idx of checked) {
-                        if (idx === 0) {
-                            let afterFirst = current * POISON_MAIN;
-                            let testVal = Math.floor(afterFirst) + 1;
-                            if (testVal >= poisonLimit) {
-                                current = poisonLimit;
-                                poisonUsed = false;
-                            } else {
-                                current = afterFirst * POISON_EXTRA;
-                                poisonUsed = true;
-                            }
-                        } else {
-                            current *= enchantments[idx].mult;
-                        }
+                    for (let idx of checked)
+                    {
+                        if (idx === 0)
+                        {
+                       // 先乘以主倍率
+                          let afterFirst = current * POISON_MAIN;
+                       // 再乘以缓慢增长倍率 K（不管是否达到极限，都先乘）
+                           let afterK = afterFirst * POISON_EXTRA;
+                       // 判断最终结果是否 ≥ 毒魔极限
+                           let testVal = Math.floor(afterK) + 1;
+                           if (testVal >= poisonLimit) 
+                           {
+                             current = poisonLimit;
+                           }
+                           else 
+                           {
+                                current = afterK;
+                           }
+                       }
                     }
 
                     result = Math.round(current);
@@ -996,10 +1001,10 @@
                         let testVal = Math.floor(afterDiv) + 1;
                         if (testVal >= rawLimit) {
                             current = rawLimit;
+                            hintText = `Poison 达到裸矿极限，设为 ${rawLimit}`;
                         } else {
                             current = afterDiv / POISON_EXTRA;
-                            hintText =
-                                `Poison 未达裸矿极限，使用完整倍率 ×${(POISON_MAIN * POISON_EXTRA).toFixed(6)} 还原`;
+                            hintText = `Poison 未达裸矿极限，使用完整倍率还原`;
                         }
                     } else {
                         hintText = '未勾选 Poison，直接反推其他附魔';
