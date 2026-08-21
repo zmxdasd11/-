@@ -17,7 +17,7 @@
             justify-content: center;
             align-items: flex-start;
             font-family: 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
-            padding: 16px;
+            padding: 10px;
             margin: 0;
         }
         .calculator {
@@ -26,15 +26,15 @@
             background: rgba(28, 24, 40, 0.95);
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
-            border-radius: 32px;
-            padding: 24px 20px;
+            border-radius: 24px;
+            padding: 16px 14px;
             box-shadow: 0 15px 35px -8px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.05);
             border: 1px solid rgba(255,215,150,0.25);
             transition: all 0.2s ease;
-            margin: 10px auto;
+            margin: 6px auto;
         }
         h1 {
-            font-size: 2rem;
+            font-size: 1.6rem;
             font-weight: 600;
             text-align: center;
             letter-spacing: -0.5px;
@@ -42,38 +42,35 @@
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
-            margin-bottom: 4px;
+            margin-bottom: 2px;
             text-shadow: 0 2px 8px rgba(0,0,0,0.5);
         }
         .subtitle {
             text-align: center;
             color: #b9a98a;
-            margin-bottom: 20px;
-            font-size: 0.9rem;
+            margin-bottom: 14px;
+            font-size: 0.75rem;
             letter-spacing: 2px;
             font-weight: 400;
         }
-
-        /* ===== 桌面端双栏布局 ===== */
         .two-col {
             display: flex;
-            gap: 20px;
+            gap: 16px;
             flex-wrap: wrap;
         }
         .two-col .col-left {
             flex: 1 1 55%;
-            min-width: 280px;
+            min-width: 260px;
         }
         .two-col .col-right {
             flex: 1 1 38%;
-            min-width: 240px;
+            min-width: 220px;
         }
-
         .section-title {
-            font-size: 1rem;
+            font-size: 0.95rem;
             font-weight: 600;
             color: #d4c09a;
-            margin: 16px 0 10px 0;
+            margin: 12px 0 8px 0;
             padding-bottom: 4px;
             border-bottom: 1px solid #4e3d54;
             display: flex;
@@ -81,18 +78,17 @@
             gap: 8px;
         }
         .section-title .badge {
-            font-size: 0.55rem;
+            font-size: 0.5rem;
             background: #5e4a3c;
             color: #ffedcf;
             padding: 2px 10px;
             border-radius: 20px;
             letter-spacing: 0.5px;
         }
-
         .mode-tabs {
             display: flex;
             gap: 6px;
-            margin-bottom: 16px;
+            margin-bottom: 14px;
             background: #1f1a2c;
             padding: 4px;
             border-radius: 50px;
@@ -102,10 +98,10 @@
             flex: 1;
             background: transparent;
             border: none;
-            padding: 10px 6px;
+            padding: 10px 4px;
             border-radius: 40px;
             font-weight: 600;
-            font-size: 0.8rem;
+            font-size: 0.7rem;
             color: #c0b2a0;
             cursor: pointer;
             transition: all 0.25s;
@@ -119,12 +115,11 @@
             box-shadow: 0 4px 12px rgba(0,0,0,0.6), inset 0 1px 2px rgba(255,220,160,0.3);
             border: 1px solid #c9a87c;
         }
-
         .field-group {
             background: rgba(0,0,0,0.35);
-            border-radius: 20px;
-            padding: 14px 16px;
-            margin-bottom: 12px;
+            border-radius: 18px;
+            padding: 12px 14px;
+            margin-bottom: 10px;
             border: 1px solid #4e3d54;
             box-shadow: inset 0 2px 8px rgba(0,0,0,0.4);
         }
@@ -132,9 +127,9 @@
             display: block;
             font-weight: 500;
             color: #e0cfb0;
-            margin-bottom: 6px;
-            font-size: 0.85rem;
-            letter-spacing: 0.4px;
+            margin-bottom: 5px;
+            font-size: 0.8rem;
+            letter-spacing: 0.3px;
         }
         input[type="number"],
         select {
@@ -142,8 +137,8 @@
             background: #1c1725;
             border: 2px solid #5b4b3f;
             border-radius: 25px;
-            padding: 12px 16px;
-            font-size: 1.1rem;
+            padding: 10px 14px;
+            font-size: 1rem;
             font-weight: 600;
             color: #ffe6b0;
             outline: none;
@@ -167,21 +162,21 @@
         select {
             background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23b9a57a' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
             background-repeat: no-repeat;
-            background-position: right 16px center;
-            background-size: 20px;
+            background-position: right 14px center;
+            background-size: 18px;
+            padding-right: 40px;
         }
         select option {
             background: #1c1725;
             color: #ffe6b0;
         }
-
         .hint-text {
             color: #92836a;
-            font-size: 0.65rem;
-            margin-top: 6px;
+            font-size: 0.6rem;
+            margin-top: 5px;
             text-align: center;
+            line-height: 1.4;
         }
-
         .enchant-scroll-wrapper {
             overflow-x: auto;
             overflow-y: hidden;
@@ -212,15 +207,15 @@
             align-items: center;
             justify-content: center;
             background: rgba(38, 30, 48, 0.9);
-            padding: 10px 12px;
-            border-radius: 16px;
+            padding: 8px 10px;
+            border-radius: 14px;
             border: 1px solid #544363;
             transition: all 0.15s;
             cursor: pointer;
             user-select: none;
             position: relative;
-            min-width: 70px;
-            min-height: 70px;
+            min-width: 60px;
+            min-height: 60px;
             flex-shrink: 0;
             text-align: center;
         }
@@ -251,8 +246,8 @@
             opacity: 0.5;
         }
         .custom-check {
-            width: 22px;
-            height: 22px;
+            width: 20px;
+            height: 20px;
             border-radius: 6px;
             border: 2px solid #a58e6f;
             background: #241f2b;
@@ -261,12 +256,12 @@
             justify-content: center;
             flex-shrink: 0;
             transition: 0.15s;
-            font-size: 14px;
+            font-size: 13px;
             color: white;
             font-weight: bold;
             pointer-events: none;
             z-index: 1;
-            margin-bottom: 4px;
+            margin-bottom: 3px;
         }
         .enchant-option input:checked~.custom-check {
             background: #ac8f5f;
@@ -278,73 +273,71 @@
             display: block;
             color: #1a140e;
             font-weight: 900;
-            font-size: 16px;
+            font-size: 14px;
             line-height: 1;
         }
         .enchant-name {
             font-weight: 600;
             color: #f0dfbf;
-            font-size: 0.7rem;
+            font-size: 0.6rem;
             letter-spacing: 0.3px;
             pointer-events: none;
             z-index: 1;
             line-height: 1.2;
         }
         .enchant-mult {
-            font-size: 0.6rem;
+            font-size: 0.5rem;
             color: #b9a57a;
             background: #2f2535;
-            padding: 2px 8px;
-            border-radius: 12px;
+            padding: 1px 6px;
+            border-radius: 10px;
             border: 1px solid #66553e;
             pointer-events: none;
             z-index: 1;
-            margin-top: 3px;
+            margin-top: 2px;
         }
-
         .confirm-area {
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 12px;
-            margin-top: 10px;
+            gap: 10px;
+            margin-top: 8px;
             flex-wrap: wrap;
         }
         .confirm-area .btn {
             flex: 0 1 auto;
-            min-width: 140px;
-            padding: 10px 16px;
-            font-size: 0.85rem;
+            min-width: 120px;
+            padding: 8px 14px;
+            font-size: 0.75rem;
         }
         .confirm-status {
             color: #b9a57a;
-            font-size: 0.8rem;
+            font-size: 0.7rem;
         }
-
         .result-area {
             background: #0d0b12;
-            border-radius: 24px;
-            padding: 16px;
-            margin: 14px 0 12px;
+            border-radius: 20px;
+            padding: 14px;
+            margin: 12px 0 10px;
             border: 2px solid #ba9b6b;
             box-shadow: 0 0 30px rgba(200, 160, 80, 0.2);
             text-align: center;
         }
         .result-label {
-            font-size: 0.8rem;
+            font-size: 0.7rem;
             color: #b9a384;
             letter-spacing: 1.5px;
             text-transform: uppercase;
-            margin-bottom: 4px;
+            margin-bottom: 2px;
         }
         .result-value {
-            font-size: 2.4rem;
+            font-size: 2.2rem;
             font-weight: 800;
             color: #ffdf9e;
             text-shadow: 0 0 25px #b68b4c;
             line-height: 1.2;
             word-break: break-word;
-            margin: 4px 0;
+            margin: 2px 0;
             background: linear-gradient(180deg, #ffe9c0, #e2bc7a);
             -webkit-background-clip: text;
             background-clip: text;
@@ -352,26 +345,25 @@
         }
         .result-hint {
             color: #92836a;
-            font-size: 0.65rem;
+            font-size: 0.6rem;
             word-break: break-word;
             line-height: 1.3;
         }
-
         .btn-group {
             display: flex;
             gap: 10px;
             flex-wrap: wrap;
-            margin-top: 10px;
+            margin-top: 8px;
         }
         .btn {
             flex: 1;
-            min-width: 100px;
+            min-width: 80px;
             background: #3f3344;
             border: none;
-            padding: 14px 10px;
+            padding: 12px 10px;
             border-radius: 50px;
             font-weight: 700;
-            font-size: 0.9rem;
+            font-size: 0.8rem;
             color: #ecd9b0;
             cursor: pointer;
             transition: all 0.25s;
@@ -402,29 +394,27 @@
             cursor: not-allowed;
             transform: none !important;
         }
-
-        /* ===== K 值反推工具 (卡片) ===== */
         .k-tool-box {
-            border: 2px solid #5e4a3c;
-            border-radius: 20px;
-            padding: 16px 14px;
-            background: rgba(0, 0, 0, 0.3);
+            border: 2px solid #4e3d54;
+            border-radius: 18px;
+            padding: 14px 12px;
+            background: rgba(0, 0, 0, 0.15);
             box-shadow: 0 0 20px rgba(200, 160, 80, 0.05);
-            margin-bottom: 12px;
+            margin-bottom: 10px;
         }
         .k-tool-box .k-input-row {
             display: flex;
-            gap: 8px;
+            gap: 6px;
             flex-wrap: wrap;
         }
         .k-tool-box .k-input-row input {
             flex: 1;
-            min-width: 70px;
+            min-width: 60px;
             background: #1c1725;
             border: 2px solid #5b4b3f;
             border-radius: 25px;
-            padding: 10px 12px;
-            font-size: 1rem;
+            padding: 8px 10px;
+            font-size: 0.9rem;
             font-weight: 600;
             color: #ffe6b0;
             outline: none;
@@ -438,21 +428,21 @@
         }
         .k-tool-box .k-input-row .btn {
             flex: 0.4;
-            min-width: 70px;
-            padding: 10px 12px;
-            font-size: 0.85rem;
+            min-width: 60px;
+            padding: 8px 10px;
+            font-size: 0.75rem;
         }
         .k-result-display {
             text-align: center;
-            padding: 8px 0 2px 0;
+            padding: 6px 0 2px 0;
         }
         .k-result-display .k-label {
             color: #b9a57a;
-            font-size: 0.7rem;
+            font-size: 0.65rem;
             letter-spacing: 0.5px;
         }
         .k-result-display .k-value {
-            font-size: 1.8rem;
+            font-size: 1.6rem;
             font-weight: 700;
             color: #ffdf9e;
             text-shadow: 0 0 20px #b68b4c;
@@ -460,77 +450,93 @@
         }
         .k-result-display .k-detail {
             color: #92836a;
-            font-size: 0.65rem;
+            font-size: 0.6rem;
             margin-top: 2px;
             word-break: break-all;
         }
         .k-tip {
             text-align: center;
             color: #6d604c;
-            font-size: 0.55rem;
+            font-size: 0.5rem;
             margin-top: 4px;
             letter-spacing: 0.3px;
         }
-
+        .help-box {
+            margin-top: 12px;
+            padding: 10px 12px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 14px;
+            border: 1px solid #3a3140;
+        }
+        .help-box div {
+            color: #92836a;
+            font-size: 0.65rem;
+            text-align: center;
+            line-height: 1.6;
+        }
         footer {
             text-align: center;
-            margin-top: 18px;
+            margin-top: 14px;
             color: #6d604c;
-            font-size: 0.6rem;
+            font-size: 0.5rem;
             letter-spacing: 0.5px;
             line-height: 1.4;
             border-top: 1px solid #3a3140;
-            padding-top: 14px;
+            padding-top: 12px;
         }
 
-        /* ===== 响应式：桌面宽屏 ===== */
         @media (min-width: 820px) {
             .calculator {
-                padding: 32px 28px;
-                border-radius: 40px;
+                padding: 28px 24px;
+                border-radius: 36px;
             }
             h1 {
-                font-size: 2.4rem;
+                font-size: 2.2rem;
             }
             .subtitle {
-                font-size: 1rem;
-                margin-bottom: 24px;
+                font-size: 0.95rem;
+                margin-bottom: 20px;
             }
             .section-title {
-                font-size: 1.1rem;
-                margin: 10px 0 12px 0;
+                font-size: 1.05rem;
+                margin: 10px 0 10px 0;
             }
             .mode-btn {
-                font-size: 0.95rem;
+                font-size: 0.9rem;
                 padding: 12px 10px;
             }
             .field-group {
-                padding: 18px 20px;
-                margin-bottom: 14px;
+                padding: 16px 18px;
+                margin-bottom: 12px;
+            }
+            input[type="number"],
+            select {
+                padding: 12px 18px;
+                font-size: 1.1rem;
             }
             .enchant-option {
-                min-width: 80px;
-                min-height: 80px;
-                padding: 12px 16px;
+                min-width: 76px;
+                min-height: 76px;
+                padding: 10px 14px;
             }
             .enchant-name {
-                font-size: 0.8rem;
+                font-size: 0.75rem;
             }
             .enchant-mult {
-                font-size: 0.7rem;
+                font-size: 0.65rem;
             }
             .result-value {
-                font-size: 3.8rem;
+                font-size: 3.5rem;
             }
             .result-hint {
-                font-size: 0.85rem;
+                font-size: 0.8rem;
             }
             .btn {
-                padding: 16px 14px;
-                font-size: 1rem;
+                padding: 14px 12px;
+                font-size: 0.95rem;
             }
             .k-result-display .k-value {
-                font-size: 2.4rem;
+                font-size: 2.2rem;
             }
             .two-col .col-left {
                 flex: 1 1 58%;
@@ -538,119 +544,351 @@
             .two-col .col-right {
                 flex: 1 1 36%;
             }
+            .help-box div {
+                font-size: 0.75rem;
+            }
         }
 
-        /* ===== 手机窄屏 ===== */
         @media (max-width: 600px) {
             body {
-                padding: 8px;
+                padding: 6px;
             }
             .calculator {
-                padding: 16px 12px;
-                border-radius: 20px;
+                padding: 12px 10px;
+                border-radius: 18px;
             }
             h1 {
-                font-size: 1.5rem;
+                font-size: 1.3rem;
             }
             .subtitle {
-                font-size: 0.7rem;
-                margin-bottom: 12px;
-            }
-            .section-title {
-                font-size: 0.9rem;
-                margin: 12px 0 8px 0;
-            }
-            .mode-btn {
                 font-size: 0.65rem;
-                padding: 8px 2px;
-            }
-            .field-group {
-                padding: 12px 12px;
                 margin-bottom: 10px;
-            }
-            input[type="number"],
-            select {
-                padding: 10px 12px;
-                font-size: 1rem;
-            }
-            .enchant-option {
-                min-width: 60px;
-                min-height: 60px;
-                padding: 8px 10px;
-            }
-            .enchant-name {
-                font-size: 0.6rem;
-            }
-            .enchant-mult {
-                font-size: 0.5rem;
-                padding: 1px 6px;
-            }
-            .custom-check {
-                width: 18px;
-                height: 18px;
-                font-size: 12px;
-            }
-            .result-value {
-                font-size: 2.2rem;
-            }
-            .result-hint {
-                font-size: 0.6rem;
-            }
-            .btn {
-                font-size: 0.8rem;
-                padding: 12px 8px;
-                min-width: 70px;
-            }
-            .k-result-display .k-value {
-                font-size: 1.6rem;
             }
             .two-col {
                 flex-direction: column;
-                gap: 10px;
+                gap: 8px;
             }
             .two-col .col-left,
             .two-col .col-right {
                 flex: 1 1 100%;
                 min-width: 0;
             }
-        }
-        @media (max-width: 400px) {
-            .calculator {
-                padding: 12px 8px;
-                border-radius: 16px;
+            .section-title {
+                font-size: 0.85rem;
+                margin: 8px 0 6px 0;
             }
-            h1 {
-                font-size: 1.2rem;
+            .section-title .badge {
+                font-size: 0.45rem;
+                padding: 1px 8px;
+            }
+            .mode-tabs {
+                gap: 4px;
+                padding: 3px;
+                margin-bottom: 10px;
+                border-radius: 40px;
             }
             .mode-btn {
+                font-size: 0.6rem;
+                padding: 8px 2px;
+                border-radius: 30px;
+            }
+            .field-group {
+                padding: 10px 12px;
+                margin-bottom: 8px;
+                border-radius: 14px;
+            }
+            label {
+                font-size: 0.7rem;
+                margin-bottom: 4px;
+            }
+            input[type="number"],
+            select {
+                padding: 8px 12px;
+                font-size: 0.9rem;
+                border-radius: 20px;
+            }
+            select {
+                padding-right: 34px;
+                background-position: right 10px center;
+                background-size: 14px;
+            }
+            .hint-text {
                 font-size: 0.55rem;
-                padding: 6px 2px;
+                margin-top: 4px;
             }
             .enchant-option {
                 min-width: 50px;
                 min-height: 50px;
                 padding: 6px 8px;
+                border-radius: 12px;
+            }
+            .custom-check {
+                width: 16px;
+                height: 16px;
+                font-size: 11px;
+                margin-bottom: 2px;
+            }
+            .enchant-option input:checked~.custom-check::after {
+                font-size: 11px;
             }
             .enchant-name {
                 font-size: 0.5rem;
             }
+            .enchant-mult {
+                font-size: 0.45rem;
+                padding: 1px 4px;
+                margin-top: 1px;
+            }
+            .confirm-area {
+                gap: 6px;
+                margin-top: 6px;
+            }
+            .confirm-area .btn {
+                min-width: 100px;
+                padding: 6px 12px;
+                font-size: 0.65rem;
+            }
+            .confirm-status {
+                font-size: 0.6rem;
+            }
+            .result-area {
+                padding: 10px 12px;
+                margin: 8px 0 8px;
+                border-radius: 16px;
+            }
+            .result-label {
+                font-size: 0.6rem;
+            }
             .result-value {
                 font-size: 1.8rem;
             }
+            .result-hint {
+                font-size: 0.55rem;
+            }
+            .btn-group {
+                gap: 6px;
+                margin-top: 6px;
+            }
+            .btn {
+                padding: 10px 6px;
+                font-size: 0.7rem;
+                min-width: 60px;
+                border-radius: 40px;
+            }
+            .k-tool-box {
+                padding: 10px 10px;
+                border-radius: 14px;
+                margin-bottom: 8px;
+            }
+            .k-tool-box .k-input-row {
+                gap: 4px;
+            }
+            .k-tool-box .k-input-row input {
+                padding: 6px 8px;
+                font-size: 0.8rem;
+                border-radius: 20px;
+                min-width: 50px;
+            }
+            .k-tool-box .k-input-row .btn {
+                padding: 6px 8px;
+                font-size: 0.65rem;
+                min-width: 50px;
+            }
             .k-result-display .k-value {
                 font-size: 1.3rem;
+            }
+            .k-result-display .k-label {
+                font-size: 0.55rem;
+            }
+            .k-result-display .k-detail {
+                font-size: 0.5rem;
+            }
+            .k-tip {
+                font-size: 0.45rem;
+            }
+            .help-box {
+                margin-top: 8px;
+                padding: 8px 10px;
+                border-radius: 12px;
+            }
+            .help-box div {
+                font-size: 0.55rem;
+                line-height: 1.5;
+            }
+            footer {
+                font-size: 0.45rem;
+                margin-top: 10px;
+                padding-top: 10px;
+            }
+        }
+
+        @media (max-width: 380px) {
+            .calculator {
+                padding: 8px 6px;
+                border-radius: 14px;
+            }
+            h1 {
+                font-size: 1.1rem;
+            }
+            .mode-btn {
+                font-size: 0.5rem;
+                padding: 6px 2px;
+            }
+            .field-group {
+                padding: 8px 8px;
+                margin-bottom: 6px;
+            }
+            input[type="number"],
+            select {
+                padding: 6px 8px;
+                font-size: 0.8rem;
+            }
+            .enchant-option {
+                min-width: 44px;
+                min-height: 44px;
+                padding: 4px 6px;
+            }
+            .enchant-name {
+                font-size: 0.45rem;
+            }
+            .result-value {
+                font-size: 1.5rem;
+            }
+            .btn {
+                font-size: 0.6rem;
+                padding: 8px 4px;
+                min-width: 50px;
+            }
+            .k-result-display .k-value {
+                font-size: 1.1rem;
+            }
+            .k-tool-box .k-input-row input {
+                font-size: 0.7rem;
+                padding: 4px 6px;
+            }
+            .k-tool-box .k-input-row .btn {
+                font-size: 0.6rem;
+                padding: 4px 6px;
             }
         }
     </style>
 </head>
 <body>
     <div class="calculator">
-        <!-- HTML 结构不变，与之前一致 -->
+        <h1>⛏️ 裸矿运气</h1>
+        <div class="subtitle">附魔倍率 · 正推反推</div>
+
+        <div class="mode-tabs">
+            <button class="mode-btn active" id="modeForward">正推 ➜ 原始→附魔</button>
+            <button class="mode-btn" id="modeReverse">反推 ➜ 附魔→原始</button>
+        </div>
+
+        <div class="two-col">
+            <div class="col-left">
+                <div class="section-title">
+                    📊 主计算器
+                    <span class="badge">实时</span>
+                </div>
+
+                <div class="field-group" id="inputSection">
+                    <label id="inputLabel">当前矿物幸运值</label>
+                    <input type="number" id="luckInput" value="100" step="any" min="0" placeholder="输入数值" inputmode="decimal">
+                </div>
+
+                <div class="field-group">
+                    <label>矿物品质 (裸矿极限 → 毒魔极限)</label>
+                    <select id="qualitySelect">
+                        <option value="8694,13041">Emp (8694 → 13041)</option>
+                        <option value="19320,28979">Pul (19320 → 28979)</option>
+                        <option value="24150,36224">Qu (24150 → 36224)</option>
+                    </select>
+                    <div class="hint-text">
+                        正推：×1.5 后判定是否达到毒魔极限 &nbsp;|&nbsp; 反推：÷1.5 后判定是否达到裸矿极限
+                    </div>
+                </div>
+
+                <div class="field-group">
+                    <label>🧪 二次倍率 K 值 <span style="color:#92836a;font-weight:400;font-size:0.7rem;">（固定值，无需反推）</span></label>
+                    <input type="number" id="extraKInput" value="1.47659" step="0.000001" min="1.47" max="1.48" inputmode="decimal">
+                    <div style="color: #6d604c; font-size: 0.55rem; margin-top: 4px; text-align: center;">
+                        💡 裸矿极限为固定值（Emp:8694 / Pul:19320 / Qu:24150），<strong style="color:#b9a57a;">无需反推 K 值</strong>
+                    </div>
+                </div>
+
+                <div class="section-title" style="margin-top:4px;">
+                    🔮 附魔选项
+                    <span class="badge">勾选生效</span>
+                </div>
+                <div class="field-group">
+                    <div class="enchant-scroll-wrapper">
+                        <div class="enchant-grid" id="enchantGrid"></div>
+                    </div>
+                    <div id="confirmArea" class="confirm-area" style="display: none;">
+                        <button class="btn" id="confirmOthersBtn">✅ 确认其他附魔</button>
+                        <span class="confirm-status" id="confirmStatus">请先选择其他附魔</span>
+                    </div>
+                </div>
+
+                <div class="result-area">
+                    <div class="result-label" id="resultLabel">附魔后幸运值</div>
+                    <div class="result-value" id="resultValue">100.00</div>
+                    <div class="result-hint" id="resultHint">未选择任何附魔</div>
+                </div>
+
+                <div class="btn-group">
+                    <button class="btn reset" id="resetBtn">🔄 重置所有</button>
+                </div>
+            </div>
+
+            <div class="col-right">
+                <div class="section-title">
+                    📌 K 值参考
+                    <span class="badge">固定</span>
+                </div>
+
+                <div class="k-tool-box">
+                    <div style="color:#b9a57a; font-size:0.8rem; text-align:center; margin-bottom:8px; line-height:1.6;">
+                        ✅ <strong>裸矿极限为固定值</strong><br>
+                        <span style="color:#6d604c; font-size:0.65rem;">
+                            Emp: 8694 &nbsp;|&nbsp; Pul: 19320 &nbsp;|&nbsp; Qu: 24150
+                        </span><br>
+                        <span style="color:#6d604c; font-size:0.6rem;">
+                            K 值已固定为 1.47659，<strong>无需反推</strong>
+                        </span>
+                    </div>
+                    <div style="border-top:1px solid #3a3140; padding-top:8px; margin-top:6px;">
+                        <div style="color:#92836a; font-size:0.6rem; text-align:center; line-height:1.5;">
+                            💡 下方工具仅用于验证实测数据，<br>日常使用无需操作
+                        </div>
+                        <div class="k-input-row" style="display:flex; gap:4px; margin-top:6px; flex-wrap:wrap;">
+                            <input type="number" id="kRawInput" placeholder="裸矿值" step="any" min="0" inputmode="decimal" style="flex:1; min-width:50px; background:#1c1725; border:2px solid #5b4b3f; border-radius:20px; padding:6px 8px; font-size:0.8rem; font-weight:600; color:#ffe6b0; outline:none; text-align:center;">
+                            <input type="number" id="kPoisonInput" placeholder="毒魔后值" step="any" min="0" inputmode="decimal" style="flex:1; min-width:50px; background:#1c1725; border:2px solid #5b4b3f; border-radius:20px; padding:6px 8px; font-size:0.8rem; font-weight:600; color:#ffe6b0; outline:none; text-align:center;">
+                            <button class="btn" id="kCalcBtn" style="flex:0.3; min-width:50px; padding:6px 8px; font-size:0.65rem; background:#3f3344; border:1px solid #6c5b49; border-radius:20px; color:#ecd9b0; cursor:pointer;">验证</button>
+                        </div>
+                        <div class="k-result-display" style="text-align:center; padding:4px 0 2px 0;">
+                            <div class="k-label" style="color:#b9a57a; font-size:0.6rem;">K 值</div>
+                            <div class="k-value" id="kResultDisplay" style="font-size:1.2rem; font-weight:700; color:#ffdf9e; text-shadow:0 0 20px #b68b4c;">—</div>
+                            <div class="k-detail" id="kResultDetail" style="color:#92836a; font-size:0.5rem; word-break:break-all;">输入值后点击「验证」</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="help-box" style="margin-top:8px; padding:8px 10px; background:rgba(0,0,0,0.2); border-radius:12px; border:1px solid #3a3140;">
+                    <div style="color:#92836a; font-size:0.6rem; text-align:center; line-height:1.6;">
+                        💡 <strong>使用提示</strong><br>
+                        1. 左侧输入数值并选择品质<br>
+                        2. 勾选附魔 → 结果自动更新<br>
+                        3. K 值已固定，右侧工具仅作验证
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer>Poison → Frost → Thunder → Dustworn → Molten → Bloodmoon → Aurora → Lucky → Starfall → ADMIN</footer>
     </div>
 
     <script>
         (function() {
-            // ===== 附魔定义 =====
             const enchantments = [
                 { name: "Poison",    mult: 1.5 },
                 { name: "Frost",     mult: 1.4 },
@@ -667,14 +905,13 @@
             const POISON_MAIN = 1.5;
             const POISON_EXTRA = 1.47659;
 
-            // ===== 品质专属倍率（直接乘在原始值上） =====
+            // ===== 品质专属倍率（乘在 ×1.5 之后） =====
             const QUALITY_EXTRA = {
                 "8694,13041": 1.11504,   // Emp
                 "19320,28979": 1.21352,  // Pul
                 "24150,36224": 1.0       // Qu（暂未知）
             };
 
-            // DOM 引用（与之前相同）
             const modeForwardBtn = document.getElementById('modeForward');
             const modeReverseBtn = document.getElementById('modeReverse');
             const inputLabel = document.getElementById('inputLabel');
@@ -815,7 +1052,6 @@
                 return indices.sort((a, b) => a - b);
             }
 
-            // ===== 核心计算 =====
             function computeAndDisplay() {
                 const inputVal = parseFloat(luckInput.value);
                 if (isNaN(inputVal) || inputVal < 0) {
@@ -836,34 +1072,32 @@
                 let result, hintText = '';
 
                 if (isForwardMode) {
-                    // ---------- 正推 ----------
                     let current = inputVal;
 
                     for (let idx of checked) {
                         if (idx === 0) {
-    // 先算 ×1.5
-    let afterFirst = current * POISON_MAIN;
-    
-    // 路径1：×1.5 + 1 判断
-    let testVal1 = Math.floor(afterFirst) + 1;
-    if (testVal1 >= poisonLimit) {
-        current = poisonLimit;
-        hintText = `路径1（×1.5）达到毒魔极限，设为 ${poisonLimit}`;
-    } else {
-        // 路径2：×1.5 × 品质专属倍率 + 1 判断
-        let qualityExtra = QUALITY_EXTRA[qualitySelect.value] || 1.0;
-        let afterQuality = afterFirst * qualityExtra;
-        let testValQ = Math.floor(afterQuality) + 1;
-        if (testValQ >= poisonLimit) {
-            current = poisonLimit;
-            hintText = `路径2（×1.5 × ${qualityExtra.toFixed(5)}）达到毒魔极限，设为 ${poisonLimit}`;
-        } else {
-            // 路径3：正常缓慢增长 ×1.5 × 1.47659
-            current = afterFirst * POISON_EXTRA;
-            hintText = `路径3（缓慢增长 ×${(POISON_MAIN * POISON_EXTRA).toFixed(6)}）`;
-        }
-    }
-}
+                            // ★★★ 正推：三路径判断 ★★★
+                            let afterFirst = current * POISON_MAIN;
+
+                            // 路径1：×1.5 + 1
+                            let testVal1 = Math.floor(afterFirst) + 1;
+                            if (testVal1 >= poisonLimit) {
+                                current = poisonLimit;
+                                hintText = `路径1（×1.5）达到毒魔极限，设为 ${poisonLimit}`;
+                            } else {
+                                // 路径2：×1.5 × 品质专属倍率 + 1
+                                let qualityExtra = QUALITY_EXTRA[qualitySelect.value] || 1.0;
+                                let afterQuality = afterFirst * qualityExtra;
+                                let testValQ = Math.floor(afterQuality) + 1;
+                                if (testValQ >= poisonLimit) {
+                                    current = poisonLimit;
+                                    hintText = `路径2（×1.5 × ${qualityExtra.toFixed(5)}）达到毒魔极限，设为 ${poisonLimit}`;
+                                } else {
+                                    // 路径3：正常缓慢增长 ×1.5 × K
+                                    current = afterFirst * POISON_EXTRA;
+                                    hintText = `路径3（缓慢增长 ×${(POISON_MAIN * POISON_EXTRA).toFixed(6)}）`;
+                                }
+                            }
                         } else {
                             current *= enchantments[idx].mult;
                         }
@@ -871,7 +1105,6 @@
 
                     result = Math.round(current);
 
-                    // 构建提示信息
                     let parts = [];
                     if (hasPoison) {
                         parts.push(`Poison`);
@@ -887,40 +1120,27 @@
                     resultLabel.textContent = '附魔后幸运值';
 
                 } else {
-                    // ---------- 反推 ----------
+                    // ---------- 反推（保持原有逻辑不变） ----------
                     let current = inputVal;
 
-                    // 先逆序处理非Poison附魔
                     let reversedOther = otherIndices.slice().reverse();
                     for (let idx of reversedOther) {
                         current /= enchantments[idx].mult;
                     }
 
                     if (hasPoison) {
-    let qualityExtra = QUALITY_EXTRA[qualitySelect.value] || 1.0;
-    
-    // 尝试还原路径1：除以 1.5
-    let afterDiv1 = current / POISON_MAIN;
-    let testVal1 = Math.floor(afterDiv1) + 1;
-    
-    // 尝试还原路径2：除以 1.5 再除以品质倍率
-    let afterDivQ = current / (POISON_MAIN * qualityExtra);
-    let testValQ = Math.floor(afterDivQ) + 1;
-
-    if (testVal1 >= rawLimit) {
-        // 正推走的是路径1
-        current = rawLimit;
-        hintText = `反推：路径1（×1.5）达到裸矿极限，设为 ${rawLimit}`;
-    } else if (testValQ >= rawLimit) {
-        // 正推走的是路径2
-        current = rawLimit;
-        hintText = `反推：路径2（×1.5 × ${qualityExtra.toFixed(5)}）达到裸矿极限，设为 ${rawLimit}`;
-    } else {
-        // 正推走的是路径3
-        current = afterDiv1 / POISON_EXTRA;
-        hintText = `反推：路径3（缓慢增长还原）`;
-    }
-}
+                        let afterDiv = current / POISON_MAIN;
+                        let testVal = Math.floor(afterDiv) + 1;
+                        if (testVal >= rawLimit) {
+                            current = rawLimit;
+                            hintText = `Poison 达到裸矿极限，设为 ${rawLimit}`;
+                        } else {
+                            current = afterDiv / POISON_EXTRA;
+                            hintText = `Poison 未达裸矿极限，使用完整倍率 ×${(POISON_MAIN * POISON_EXTRA).toFixed(6)} 还原`;
+                        }
+                    } else {
+                        hintText = '未勾选 Poison，直接反推其他附魔';
+                    }
 
                     result = Math.round(current);
                     resultLabel.textContent = '原始矿物幸运值';
@@ -938,7 +1158,6 @@
                 resultHint.textContent = hintText;
             }
 
-            // ===== 切换模式 =====
             function setMode(forward) {
                 isForwardMode = forward;
                 if (forward) {
@@ -961,7 +1180,6 @@
                 computeAndDisplay();
             }
 
-            // ===== 重置 =====
             function resetAll() {
                 document.querySelectorAll('#enchantGrid input[type="checkbox"]').forEach(cb => cb.checked = false);
                 luckInput.value = 100;
@@ -972,7 +1190,6 @@
                 computeAndDisplay();
             }
 
-            // ===== 确认其他附魔 =====
             function confirmOthers() {
                 if (isForwardMode) return;
                 if (!hasOtherSelected()) {
@@ -989,7 +1206,6 @@
                 computeAndDisplay();
             }
 
-            // ===== K 值验证工具 =====
             function calcKValue() {
                 const raw = parseFloat(kRawInput.value);
                 const poison = parseFloat(kPoisonInput.value);
@@ -1009,7 +1225,6 @@
                 kResultDetail.textContent = `${poison} ÷ ${POISON_MAIN} = ${mid.toFixed(6)}，再 ÷ ${raw} = ${k.toFixed(6)}`;
             }
 
-            // ===== 初始化 =====
             function init() {
                 renderEnchantOptions();
 
